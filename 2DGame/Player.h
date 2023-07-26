@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Object.h"
+#include "Entity.h"
 #include "Bullet.h"
 
-class Player : public Object
+class Player : public Entity
 {
 private:
-	int m_xSpeed;
-	int m_ySpeed;
 	bool m_right = false, m_left = false, m_up = false, m_down = false;
 	int m_xMouse, m_yMouse;
 	int m_xClick, m_yClick;

@@ -4,30 +4,18 @@
     <Filter Include="Code">
       <UniqueIdentifier>{b61a86d7-025c-4975-8fab-851b12aebc88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Calculations">
+      <UniqueIdentifier>{40193c88-404b-4354-a3a1-cf7c508890a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Code</Filter>
-    </ClInclude>
     <ClInclude Include="Array.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
       <Filter>Code</Filter>
     </ClInclude>
     <ClInclude Include="AI.h">
       <Filter>Code</Filter>
     </ClInclude>
     <ClInclude Include="Vec2.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics.h">
       <Filter>Code</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
@@ -39,21 +27,21 @@
     <ClInclude Include="Text.h">
       <Filter>Code</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Calculations</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Calculations</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Calculations</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Calculations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
     <ClCompile Include="AI.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics.cpp">
       <Filter>Code</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
@@ -61,6 +49,18 @@
     </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>Code</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Calculations</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Calculations</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Calculations</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Calculations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,9 +1,10 @@
 #include "Player.h"
 
 Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest) : 
-	Object(dest), m_ev(ev), m_xSpeed(6), m_ySpeed(6), m_attackRange(350), m_xClick(0), m_yClick(0) {
+	Entity(dest), m_ev(ev), m_attackRange(350), m_xClick(0), m_yClick(0) {
 	m_ren = ren;
 	m_tex = tex;
+	m_velocity = Vec2(5.0f, 5.0f);
 	for (int i = 0; i < 30; i++)
 		m_bullets[i] = NULL;
 	Init(&dest);
@@ -71,13 +72,13 @@ void Player::Move() {
 		}
 	}
 	if (m_up)
-		ChangeDestPosFor(Vec2(0, -m_ySpeed));
+		ChangeDestPosFor(Vec2(0, -m_velocity.m_y));
 	else if (m_down)
-		ChangeDestPosFor(Vec2(0, m_ySpeed));
+		ChangeDestPosFor(Vec2(0, m_velocity.m_y));
 	if (m_right)
-		ChangeDestPosFor(Vec2(m_xSpeed, 0));
+		ChangeDestPosFor(Vec2(m_velocity.m_x, 0));
 	else if (m_left)
-		ChangeDestPosFor(Vec2(-m_xSpeed, 0));
+		ChangeDestPosFor(Vec2(-m_velocity.m_x, 0));
 }
 bool Player::CheckForAttack() {
 	int xCenter = m_screen.x + m_screen.w / 2, yCenter = m_screen.y + m_screen.h / 2;
