@@ -7,7 +7,7 @@ PowerUp::PowerUp(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* p
 	m_canBeDestroyed = false;
 	m_isAlive = true;
 	m_playerRect = player;
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 24; i++)
 		m_particles[i] = NULL;
 	Init(player);
 }
@@ -36,13 +36,13 @@ void PowerUp::Update() {
 		Render();
 	}
 	else {
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 24; i++) {
 			if (m_particles[i] != NULL && !m_particles[i]->m_isDead) {
 				m_particles[i]->Update();
 				m_particles[i]->UpdatePositionRelativeToPlayer();
 			}
 		}
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 24; i++) {
 			if (m_particles[i] != NULL && m_particles[i]->m_isDead)
 				m_canBeDestroyed = true;
 			else {
@@ -55,17 +55,42 @@ void PowerUp::Update() {
 void PowerUp::Destroy() {
 	if (m_isAlive) {
 		m_isAlive = false;
-		const float radius = 50.0f;
-		Vec2 startPoint = { (float)m_screen.x, (float)m_screen.y };
-		for (int i = 0; i < 12; i++) {
-			float angle = static_cast<float>(i) * (2.0f * static_cast<float>(M_PI)) / static_cast<float>(12);
+		// Calculate the angle step for each particle
+		float angleStep = 2 * M_PI / 24; // Divide the full circle (2 * pi radians) into 12 parts
+		float distance = 1;
 
-			// Calculate the position for the particle based on the angle and radius.
-			float offsetX = radius * cosf(angle);
-			float offsetY = radius * sinf(angle);
-			Vec2 particlePos = startPoint + Vec2(offsetX, offsetY);
+		int xCenter = m_dest.x + m_dest.w / 2;
+		int yCenter = m_dest.y + m_dest.h / 2;
 
-			m_particles[i] = new Particle(m_ren, m_tex, { static_cast<int>(particlePos.m_x), static_cast<int>(particlePos.m_y), 5, 5 }, m_playerRect, 4, Vec2(0,0), 10);
+		float timeToLive, speedValue;
+		int size;
+
+		for (int i = 0; i < 24; ++i)
+		{
+			timeToLive = 0.4 - (float)(rand() % 15) / 100;
+			size = 7 - rand()%4;
+			speedValue = 4 - (float)(rand()%8)/100;
+			// Calculate the angle for the current particle
+			float angle = i * angleStep;
+
+			float targetX = xCenter + std::cos(angle) * distance;
+			float targetY = yCenter + std::sin(angle) * distance;
+
+			// Calculate the normalized direction vector towards the target position
+			Vec2 direction(targetX - xCenter, targetY - yCenter);
+			float distance = std::sqrt(direction.m_x * direction.m_x + direction.m_y * direction.m_y);
+			direction = direction * (1.0f / distance);
+
+			// Set the velocity vector with a constant speed value
+			Vec2 velocity = direction*speedValue;
+
+			// Set the initial position of the particle (same as the center point)
+			SDL_Rect dest = { xCenter, yCenter, size, size };
+			SDL_Rect screen = { m_screen.x, m_screen.y, size, size };
+
+			// Create the particle with the calculated velocity and position
+			m_particles[i] = new Particle(m_ren, m_tex, dest, {m_screen.x+m_screen.w/2, m_screen.y+m_screen.h/2, size, size}, m_playerRect, velocity, timeToLive);
+
 		}
 	}
 }

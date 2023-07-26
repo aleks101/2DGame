@@ -23,17 +23,9 @@ void Player::Update() {
 			delete m_bullets[i];
 			m_bullets[i] = NULL;
 		}
-		//SetCamera(GetDest());
-		SetCamera();
-		if (CheckForChange()) {
-			Vec2 vec2 = CalculateChange();
-			vec2.m_x = vec2.m_x;
-			vec2.m_y = vec2.m_y;
-			for (int i = 0; i < 30; i++) {
-				if (m_bullets[i] != NULL)
-					m_bullets[i]->ChangeDestPosFor(vec2);
-					//m_bullets[i]->ChangeScreenPosFor(vec2);
-			}
+		for (int i = 0; i < 30; i++) {
+			if (m_bullets[i] != NULL)
+				m_bullets[i]->UpdatePositionRelativeToPlayer();
 		}
 		if (m_bullets[i] != NULL)
 			m_bullets[i]->Update();
@@ -99,9 +91,12 @@ bool Player::CheckForAttack() {
 	return false;
 }
 void Player::Attack() {
+	int size=20;
 	for (int i = 0; i < 30; i++) {
 		if (m_bullets[i] == NULL) {
-			m_bullets[i] = new Bullet(m_ren, m_tex, m_screen, Vec2(m_xClick, m_yClick), 9, 0, 0, 3);
+			m_bullets[i] = new Bullet(m_ren, m_tex, {m_dest.x+m_dest.w/2 - size/2, m_dest.y+m_dest.h/2 - size/2, size, size}, 
+				GetDest(), Vec2(m_screen.x + m_screen.w / 2 - size / 2, m_screen.y + m_screen.h / 2 - size / 2), 
+				Vec2(m_xClick, m_yClick), 9, 0, 0, 3);
 			break;
 		}
 	}

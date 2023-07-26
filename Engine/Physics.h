@@ -5,5 +5,5 @@
 #include "Vec2.h"
 
 namespace physics {
-	Vec2 calculateVelocity(Vec2 currentPos, Vec2 targetPos, float constantVelocity);
+	Vec2 CalculateVelocity(Vec2 currentPos, Vec2 targetPos, float constantVelocity);
 }

@@ -32,7 +32,6 @@ public:
 		SetCamera();
 		if (CheckForChange()) {
 			Vec2 vec2 = CalculateChange();
-			ChangeDestPosFor(vec2);
 			ChangeScreenPosFor(vec2);
 		}
 	}

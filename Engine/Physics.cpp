@@ -1,7 +1,7 @@
 #include "Physics.h"
 
 namespace physics {
-	Vec2 calculateVelocity(Vec2 currentPos, Vec2 targetPos, float constantVelocity) {
+	Vec2 CalculateVelocity(Vec2 currentPos, Vec2 targetPos, float constantVelocity) {
 		// Calculate the displacement vector from current position to target position
 		Vec2 displacement = { targetPos.m_x - currentPos.m_x, targetPos.m_y - currentPos.m_y };
 

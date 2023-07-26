@@ -13,6 +13,8 @@ Game::~Game() {
 	App::ApplicationQuit();
 }
 void Game::Setup() {
+	srand(time(NULL));
+
 	isRunning = true;
 	//dodaj texture
 	Assets::AddTexture(m_ren, "Files/Images/blue.png", 0);
@@ -51,7 +53,7 @@ void Game::MainLoop() {
 			if (powerUp != NULL) {
 				powerUp->Update();
 				powerUp->UpdatePositionRelativeToPlayer();
-				if (coll::CheckCollisionAABB(*powerUp->GetScreen(), *player->GetScreen()))
+				if(coll::CheckCollisionAABB(*powerUp->GetDest(), *player->GetDest()))
 					powerUp->Destroy();
 				if (powerUp->m_canBeDestroyed) {
 					delete powerUp;

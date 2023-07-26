@@ -34,5 +34,5 @@ public:
 private:
 	SDL_Rect* m_playerRect;
 	bool m_isAlive;
-	Particle* m_particles[12];
+	Particle* m_particles[24];
 };
