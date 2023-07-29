@@ -1,9 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(SDL_Rect dest) : Object(dest) {
-	std::cout << "ENTITY CONSTRUCTED\n";
-}
-Entity::Entity(SDL_Rect dest, SDL_Rect* playerDest) : Object(dest, playerDest) {
+Entity::Entity() {
 	std::cout << "ENTITY CONSTRUCTED\n";
 }
 Entity::~Entity() {

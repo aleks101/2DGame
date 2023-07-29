@@ -48,11 +48,11 @@
     <ClCompile Include="Player.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Entity\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Follower.cpp">
+      <Filter>Entity\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +74,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Entity\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="PowerUp.h">
       <Filter>PowerUp</Filter>
     </ClInclude>
@@ -85,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Follower.h">
+      <Filter>Entity\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

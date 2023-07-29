@@ -6,17 +6,19 @@
 #include "Player.h"
 #include "Collision.h"
 #include "PowerUp.h"
+#include "Follower.h"
 
 class Game : public Camera
 {
 private:
 	SDL_Event ev;
-
 	SDL_Renderer* m_ren;
+
 	Player* player;
 	PowerUp* powerUp;
-
 	std::vector<Object*> objects;
+
+	SDL_Texture* sceneTexture;
 
 	bool isRunning;
 public:

@@ -1,12 +1,13 @@
 #include "Player.h"
 
 Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest) : 
-	Entity(dest), m_ev(ev), m_attackRange(350), m_xClick(0), m_yClick(0) {
+	Object(dest), Entity(), m_ev(ev), m_attackRange(350), m_xClick(0), m_yClick(0) {
 	m_ren = ren;
 	m_tex = tex;
 	m_velocity = Vec2(5.0f, 5.0f);
 	for (int i = 0; i < 30; i++)
 		m_bullets[i] = NULL;
+
 	Init(&dest);
 }
 void Player::Render() {

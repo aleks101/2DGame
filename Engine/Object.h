@@ -66,6 +66,9 @@ public:
 	inline virtual void SetSolid(bool isSolid) {
 		m_isSolid = isSolid;
 	}
+	inline virtual Vec2 GetCenter() {
+		return Vec2(m_dest.x + m_dest.w / 2, m_dest.y + m_dest.h / 2);
+	}
 protected:
 	SDL_Rect m_src;
 	SDL_Rect m_dest;

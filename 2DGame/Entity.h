@@ -1,8 +1,10 @@
 #pragma once
 
-#include "Object.h"
+#include <SDL.h>
 
-class Entity : public Object
+#include "Vec2.h"
+
+class Entity
 {
 private:
 
@@ -11,8 +13,7 @@ protected:
 	bool m_isAlive;
 	Vec2 m_velocity;
 public:
-	Entity(SDL_Rect dest);
-	Entity(SDL_Rect dest, SDL_Rect* playerDest);
+	Entity();
 	~Entity();
 	void AddHealth(float health);
 	void RemoveHealth(float health);

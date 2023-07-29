@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Bullet.h"
 
-class Player : public Entity
+class Player : public Object, public Entity
 {
 private:
 	bool m_right = false, m_left = false, m_up = false, m_down = false;

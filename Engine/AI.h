@@ -1,17 +1,18 @@
 #pragma once
 
-#include "Vec2.h"
 #include <SDL.h>
+
+#include "Vec2.h"
+#include "Physics.h"
 
 class AI
 {
-private:
-
-public:
-	AI();
-	void Follow(SDL_Rect& dest, Vec2 destination);
-
 protected:
-
+	SDL_Rect* m_enemyDest;
+private:
+	SDL_Rect* m_entityDest;
+public:
+	AI(SDL_Rect* playerDest, SDL_Rect* dest);
+	virtual Vec2 Follow(float speed, Vec2 destination);
 };
 

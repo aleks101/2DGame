@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Vec2.h"
 #include "Physics.h"
+//#include "Light.h"
 
 class Particle : public Object
 {
@@ -23,5 +24,6 @@ private:
 	float m_lifetime;
 	Vec2 m_velocity;
 	Timer m_timer;
+	//Light m_light;
 };
 

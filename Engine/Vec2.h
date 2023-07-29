@@ -16,6 +16,11 @@ struct Vec2 {
     Vec2 operator/(float scalar) const {
         return Vec2(m_x / scalar, m_y / scalar);
     }
+    bool operator==(Vec2 vec2) {
+        if (m_x == vec2.m_x && m_y == vec2.m_y)
+            return true;
+        return false;
+    }
     float GetMagnitude() const {
         return std::sqrt(m_x * m_x + m_y * m_y);
     }

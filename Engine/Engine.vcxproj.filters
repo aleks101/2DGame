@@ -39,6 +39,9 @@
     <ClInclude Include="Timer.h">
       <Filter>Calculations</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Code</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp">
@@ -61,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Calculations</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
