@@ -30,15 +30,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Assets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -46,9 +37,6 @@
       <Filter>PowerUp</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="Follower.cpp">
@@ -59,18 +47,6 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Assets.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="App.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,9 +54,6 @@
       <Filter>PowerUp</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="Follower.h">

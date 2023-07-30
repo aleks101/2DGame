@@ -2,9 +2,9 @@
 
 #include "Object.h"
 #include "Entity.h"
-#include "AI.h"
+#include "Physics.h"
 
-class Follower : public Object, public Entity, public AI
+class Follower : public Object, public Entity
 {
 private:
 	float m_speed;
@@ -15,6 +15,8 @@ private:
 	bool m_isSearchPointSet;
 	Vec2 m_destination;
 	bool m_isPlayerInRadius;
+
+	SDL_Rect* m_enemyDest;
 public:
 	Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* playerDest, float speed, float damage, int wonderRadius, int playerRadius);
 	~Follower();

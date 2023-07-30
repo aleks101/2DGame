@@ -1,32 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Code">
-      <UniqueIdentifier>{b61a86d7-025c-4975-8fab-851b12aebc88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Calculations">
       <UniqueIdentifier>{40193c88-404b-4354-a3a1-cf7c508890a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{90596d13-878a-4f23-897e-e621f3336a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects">
+      <UniqueIdentifier>{96f8c6db-0478-4e72-b9b7-d9da7c1d8609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{f869ba38-b086-4730-a4ab-36aad0d1867a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App">
+      <UniqueIdentifier>{f1b721c8-fcbf-470e-be9a-37e78a2c16d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Array.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="AI.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Vec2.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Code</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Calculations</Filter>
     </ClInclude>
@@ -39,20 +30,44 @@
     <ClInclude Include="Timer.h">
       <Filter>Calculations</Filter>
     </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>Calculations</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
     <ClInclude Include="Light.h">
-      <Filter>Code</Filter>
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Array.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets.h">
+      <Filter>App</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AI.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Particle.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Calculations</Filter>
     </ClCompile>
@@ -65,8 +80,29 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Calculations</Filter>
     </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>Code</Filter>
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Assets.cpp">
+      <Filter>App</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

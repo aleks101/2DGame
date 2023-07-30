@@ -28,7 +28,7 @@ void Game::Setup() {
 	player = new Player(m_ren, Assets::GetTexture("Files/Images/red.png"), &ev, { 600, 350, 50, 50 });
 
 	objects.push_back(new Tile(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 100, 200, 200 }, player->GetDest()));
-	objects.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 300, 350, 50 ,50 }, player->GetDest(), 1, 1, 600, 300));
+	//objects.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player->GetDest(), 1, 1, 600, 300));
 	powerUp = new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5));
 
 	Init(player->GetDest());
