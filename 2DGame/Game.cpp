@@ -1,5 +1,5 @@
 #include "Game.h"
-#include <fstream>
+
 Game::Game() {
 	App::ApplicationStart("2D game");
 	m_ren = App::renderer;
@@ -28,7 +28,7 @@ void Game::Setup() {
 	player = new Player(m_ren, Assets::GetTexture("Files/Images/red.png"), &ev, { 600, 350, 50, 50 }, 1000);
 
 	objects.push_back(new Tile(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 100, 200, 200 }, player->GetDest(), true));
-	objects.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player->GetDest(), 100, 2.5f, 10, 600, 300));
+	objects.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player->GetDest(), 100, 2.5f, 10, 300, 100));
 	powerUp = new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5));
 
 	MainLoop();

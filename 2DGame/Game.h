@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ctime>
+
 #include "App.h"
 #include "Assets.h"
 #include "Map.h"

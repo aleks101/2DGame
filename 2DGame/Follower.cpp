@@ -6,6 +6,7 @@ Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect*
 	m_tex = tex;
 	m_isSearchPointSet = false;
 	m_destination = Vec2();
+	m_velocity = Vec2();
 	m_isAlive = true;
 	m_isPlayerInRadius = false;
 	std::cout << "FOLLOWER CREATED\n";
@@ -19,41 +20,60 @@ void Follower::Render() {
 void Follower::Update() {
 	if (m_health <= 0)
 		m_isAlive = false;
-	if (m_isAlive) {
+	else {
 		Vec2 enemyCenter(m_enemyDest->x + m_enemyDest->w / 2, m_enemyDest->y + m_enemyDest->h / 2);
 		Vec2 enemyPos(m_enemyDest->x, m_enemyDest->y);
+		Vec2 destPos(m_dest.x, m_dest.y);
 
-		if (IsPointInRadius(enemyCenter, m_searchPlayerRadius)) {
+		if (IsPointInRadius(GetCenter(), enemyCenter, m_searchPlayerRadius)) {
 			//Player is in radius
 			m_isSearchPointSet = false;
-			if(m_destination != physics::CalculateVelocity(Vec2(m_dest.x, m_dest.y), enemyPos, m_speed))
-				m_destination = physics::CalculateVelocity(Vec2(m_dest.x, m_dest.y), enemyPos, m_speed);
+			if(m_velocity != physics::CalculateVelocity(destPos, enemyPos, m_speed))
+				m_velocity = physics::CalculateVelocity(destPos, enemyPos, m_speed);
 		}
 		else if(!m_isSearchPointSet){
-			m_destination = physics::CalculateVelocity(Vec2(m_dest.x, m_dest.y), GetRandomPoint(m_wonderRadius), m_speed);
-			m_isSearchPointSet = true;
+			std::cout << "NEW SEARCH POINT\n";
+			if (destPos.x != m_wonderRadius && destPos.y != m_wonderRadius) {
+				m_destination = GetRandomPoint(destPos, m_wonderRadius);
+				m_velocity = physics::calculateVelocityProportional(destPos, m_destination, m_speed);
+				m_isSearchPointSet = true;
+			}
 		}
-		else if(IsPointInRadius(Vec2(m_dest.x, m_dest.y), 30)){
+		else if(IsPointInRadius(m_destination, destPos, 30)){
+			std::cout << "SEARCH POINT REACHED\n";
 			m_isSearchPointSet = false;
 		}
+		else
+			std::cout << destPos.x << ", " << destPos.y << " : " << m_destination.x << ", " << m_destination.y << "\n";
 		Move();
 		Render();
 	}
 }
 void Follower::Move() {
-	ChangeDestPosFor(m_destination);
-	ChangeScreenPosFor(m_destination);
+	ChangeDestPosFor(m_velocity);
+	ChangeScreenPosFor(m_velocity);
 }
-bool Follower::IsPointInRadius(Vec2 point, float radius) {
-	if (point.x > GetCenter().x - radius && point.x < GetCenter().x + radius &&
-		point.y > GetCenter().y - radius && point.y < GetCenter().y + radius) {
+bool Follower::IsPointInRadius(Vec2 centerPoint, Vec2 randomPoint, float radius) {
+	if (randomPoint.x > centerPoint.x - radius && randomPoint.x < centerPoint.x + radius &&
+		randomPoint.y > centerPoint.y - radius && randomPoint.y < centerPoint.y + radius) {
 		return true;
 	}
 	return false;
 }
-Vec2 Follower::GetRandomPoint(int radius) {
-	int x = rand() % ((int)GetCenter().x - radius) + radius;
-	int y = rand() % ((int)GetCenter().y - radius) + radius;
+Vec2 Follower::GetRandomPoint(Vec2 centerPoint, int radius) {
+	/*int x = rand() % ((int)centerPoint.x - radius) + radius;
+	int y = rand() % ((int)centerPoint.y - radius) + radius;
 
-	return Vec2(x, y);
+	return Vec2(x, y);*/
+	//// Seed the random number generator with the current time
+	//std::srand(static_cast<unsigned int>(std::time(0)));
+
+	// Generate a random angle in radians
+	float randomAngle = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * 2.0f * M_PI;
+
+	// Calculate the random x and y coordinates within the radius
+	int x = static_cast<int>(centerPoint.x + radius * std::cos(randomAngle));
+	int y = static_cast<int>(centerPoint.y + radius * std::sin(randomAngle));
+
+	return Vec2{ static_cast<float>(x), static_cast<float>(y) };
 }

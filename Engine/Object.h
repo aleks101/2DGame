@@ -7,7 +7,10 @@
 
 #include "Camera.h"
 
-class Object : public Camera
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT  720
+
+class Object : private Camera
 {
 public:
 	Object(SDL_Rect dest) : m_dest(dest), m_screen(dest),m_isSolid(true) { 

@@ -8,7 +8,7 @@ Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest
 	for (int i = 0; i < 30; i++)
 		m_bullets[i] = NULL;
 
-	Init(&dest);
+	//Init(&dest);
 }
 void Player::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
@@ -83,9 +83,9 @@ void Player::Move() {
 	else if (m_left)
 		ChangeDestPosFor(Vec2(-m_velocity.x, 0));
 
-	if (m_dest.x < 0)
+	if (m_dest.x < 20)
 		ChangeDestPosFor(Vec2(m_velocity.x, 0));
-	if(m_dest.y < 0)
+	if(m_dest.y < 20)
 		ChangeDestPosFor(Vec2(0, m_velocity.y));
 }
 bool Player::CheckForAttack() {

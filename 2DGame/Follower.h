@@ -13,7 +13,7 @@ private:
 	int m_searchPlayerRadius;
 
 	bool m_isSearchPointSet;
-	Vec2 m_destination;
+	Vec2 m_velocity, m_destination;
 	bool m_isPlayerInRadius;
 
 	SDL_Rect* m_enemyDest;
@@ -27,7 +27,8 @@ public:
 	void Render();
 	void Update();
 	void Move();
-	bool IsPointInRadius(Vec2 point, float radius);
-	Vec2 GetRandomPoint(int radius);
+	bool IsPointInRadius(Vec2 centerPoint, Vec2 randomPoint, float radius);
+	Vec2 GetRandomPoint(Vec2 centerPoint, int radius);
+
 };
 

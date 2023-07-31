@@ -10,21 +10,22 @@ struct Vec2 {
     Vec2 operator+(const Vec2& other) const {
         return Vec2(x + other.x, y + other.y);
     }
+    Vec2 operator-(const Vec2& other) const {
+        return Vec2(x - other.x, y - other.y);
+    }
     Vec2 operator*(float scalar) const {
         return Vec2(x * scalar, y * scalar);
     }
     Vec2 operator/(float scalar) const {
         return Vec2(x / scalar, y / scalar);
     }
-    bool operator==(Vec2 vec2) {
+    bool operator==(const Vec2& vec2) {
         if (x == vec2.x && y == vec2.y)
             return true;
         return false;
     }
-    bool operator!=(Vec2 vec2) {
-        if (x != vec2.x || y != vec2.y)
-            return true;
-        return false;
+    bool operator!=(const Vec2& other) const {
+        return (x != other.x) || (y != other.y);
     }
     float GetMagnitude() const {
         return std::sqrt(x * x + y * y);

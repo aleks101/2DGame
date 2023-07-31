@@ -1,7 +1,7 @@
 #include "PowerUp.h"
 
 PowerUp::PowerUp(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* player, Ability ability) 
-	: Object(dest), Ability(ability) {
+	: Object(dest, player), Ability(ability) {
 	m_ren = ren;
 	m_tex = tex;
 	m_canBeDestroyed = false;
@@ -9,7 +9,6 @@ PowerUp::PowerUp(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* p
 	m_playerRect = player;
 	for (int i = 0; i < 24; i++)
 		m_particles[i] = NULL;
-	Init(player);
 }
 PowerUp::~PowerUp() {
 	for (auto& part : m_particles) {
