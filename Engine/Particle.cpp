@@ -34,5 +34,4 @@ void Particle::Update() {
 void Particle::Move() {
 	ChangeDestPosFor(m_velocity);
 	ChangeScreenPosFor(m_velocity);
-	/*m_light.ChangePos(Vec2(m_screen.x, m_screen.y));*/
 }

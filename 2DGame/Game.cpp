@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include <fstream>
 Game::Game() {
 	App::ApplicationStart("2D game");
 	m_ren = App::renderer;
@@ -25,13 +25,12 @@ void Game::Setup() {
 	//SDL_SetTextureBlendMode(Assets::GetTexture("Files/Images/blue.png"), SDL_BLENDMODE_BLEND);
 	//SDL_SetTextureBlendMode(Assets::GetTexture("Files/Images/red.png"), SDL_BLENDMODE_BLEND);
 
-	player = new Player(m_ren, Assets::GetTexture("Files/Images/red.png"), &ev, { 600, 350, 50, 50 });
+	player = new Player(m_ren, Assets::GetTexture("Files/Images/red.png"), &ev, { 600, 350, 50, 50 }, 1000);
 
-	objects.push_back(new Tile(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 100, 200, 200 }, player->GetDest()));
-	//objects.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player->GetDest(), 1, 1, 600, 300));
+	objects.push_back(new Tile(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 100, 200, 200 }, player->GetDest(), true));
+	objects.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player->GetDest(), 100, 2.5f, 10, 600, 300));
 	powerUp = new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5));
 
-	Init(player->GetDest());
 	MainLoop();
 }
 void Game::Quit() {
@@ -51,6 +50,7 @@ void Game::MainLoop() {
 			SDL_SetRenderTarget(m_ren, sceneTexture);
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 0);
 			SDL_RenderClear(m_ren);
+
 
 			//posodobi objekte
 			for (int i = 0; i < objects.size(); i++) {
@@ -76,6 +76,8 @@ void Game::MainLoop() {
 					}
 				}
 			}
+
+
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 255);

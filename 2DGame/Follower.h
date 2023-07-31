@@ -18,7 +18,7 @@ private:
 
 	SDL_Rect* m_enemyDest;
 public:
-	Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* playerDest, float speed, float damage, int wonderRadius, int playerRadius);
+	Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* playerDest, float health, float speed, float damage, int wonderRadius, int playerRadius);
 	~Follower();
 	SDL_Rect* GetDest() { return &m_dest; }
 	SDL_Rect* GetSrc() { return &m_src; }
@@ -28,6 +28,6 @@ public:
 	void Update();
 	void Move();
 	bool IsPointInRadius(Vec2 point, float radius);
-	Vec2 GetRandomPoint();
+	Vec2 GetRandomPoint(int radius);
 };
 

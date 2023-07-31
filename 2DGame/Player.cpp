@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest) : 
-	Object(dest), Entity(), m_ev(ev), m_attackRange(350), m_xClick(0), m_yClick(0) {
+Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest, float health) : 
+	Object(dest), Entity(health), m_ev(ev), m_attackRange(550), m_xClick(0), m_yClick(0) {
 	m_ren = ren;
 	m_tex = tex;
 	m_velocity = Vec2(5.0f, 5.0f);
@@ -15,6 +15,8 @@ void Player::Render() {
 }
 void Player::Update() {
 	SDL_GetMouseState(&m_xMouse, &m_yMouse);
+	if (m_health <= 0)
+		m_isAlive = false;
 	if (CheckForAttack()) {
 		m_xClick = m_xMouse;
 		m_yClick = m_yMouse;
@@ -73,13 +75,18 @@ void Player::Move() {
 		}
 	}
 	if (m_up)
-		ChangeDestPosFor(Vec2(0, -m_velocity.m_y));
+		ChangeDestPosFor(Vec2(0, -m_velocity.y));
 	else if (m_down)
-		ChangeDestPosFor(Vec2(0, m_velocity.m_y));
+		ChangeDestPosFor(Vec2(0, m_velocity.y));
 	if (m_right)
-		ChangeDestPosFor(Vec2(m_velocity.m_x, 0));
+		ChangeDestPosFor(Vec2(m_velocity.x, 0));
 	else if (m_left)
-		ChangeDestPosFor(Vec2(-m_velocity.m_x, 0));
+		ChangeDestPosFor(Vec2(-m_velocity.x, 0));
+
+	if (m_dest.x < 0)
+		ChangeDestPosFor(Vec2(m_velocity.x, 0));
+	if(m_dest.y < 0)
+		ChangeDestPosFor(Vec2(0, m_velocity.y));
 }
 bool Player::CheckForAttack() {
 	int xCenter = m_screen.x + m_screen.w / 2, yCenter = m_screen.y + m_screen.h / 2;

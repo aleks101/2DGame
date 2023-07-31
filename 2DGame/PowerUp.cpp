@@ -78,7 +78,7 @@ void PowerUp::Destroy() {
 
 			// Calculate the normalized direction vector towards the target position
 			Vec2 direction(targetX - xCenter, targetY - yCenter);
-			float distance = std::sqrt(direction.m_x * direction.m_x + direction.m_y * direction.m_y);
+			float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 			direction = direction * (1.0f / distance);
 
 			// Set the velocity vector with a constant speed value

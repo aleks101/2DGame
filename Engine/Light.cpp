@@ -37,7 +37,7 @@ void Light::DrawLight() {
                 SDL_SetRenderDrawColor(m_ren, 255, 255, 255, alpha);
 
                 // Draw a single pixel at (x + dx, y + dy) with the calculated alpha value
-                SDL_RenderDrawPoint(m_ren, m_pos.m_x + dx, m_pos.m_y + dy);
+                SDL_RenderDrawPoint(m_ren, m_pos.x + dx, m_pos.y + dy);
             }
         }
     }

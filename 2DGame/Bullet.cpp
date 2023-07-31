@@ -6,8 +6,8 @@ Bullet::Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* 
 	m_tex = tex;
 	m_dest = destPos;
 	m_screen = destPos;
-	m_screen.x = screenPos.m_x;
-	m_screen.y = screenPos.m_y;
+	m_screen.x = screenPos.x;
+	m_screen.y = screenPos.y;
 	m_velocity = physics::CalculateVelocity(Vec2(m_screen.x, m_screen.y), point, constantVelocity);
 	Start();
 }

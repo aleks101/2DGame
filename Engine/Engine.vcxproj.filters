@@ -66,6 +66,9 @@
     <ClInclude Include="Assets.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="Assets.cpp">
       <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

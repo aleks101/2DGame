@@ -9,7 +9,6 @@ private:
 	//player dest
 	SDL_Rect* cameraPos;
 	SDL_Rect prevCamera;
-	int currXoffset, currYoffset;
 	int prevXoffset, prevYoffset;
 public:
 	Camera();

@@ -12,19 +12,19 @@ void Camera::SetCamera() {
 	prevYoffset = cameraPos->y - prevCamera.y;
 
 	prevCamera = *cameraPos;
-
-	currXoffset = cameraPos->x - prevCamera.x;
-	currYoffset = cameraPos->y - prevCamera.y;
 }
 bool Camera::CheckForChange() {
-	if (prevXoffset != currYoffset || prevYoffset != currYoffset) {
+	if (prevXoffset != 0 || prevYoffset != 0) {
 		return true;
 	}
 	return false;
 }
 Vec2 Camera::CalculateChange() {
+	//if player's position gets below x0 and y0, camera stops working properly
 	int xOffset, yOffset;
-	xOffset = currXoffset - prevXoffset;
-	yOffset = currYoffset - prevYoffset;
+
+	xOffset = -prevXoffset;
+	yOffset = -prevYoffset;
+
 	return Vec2(xOffset, yOffset);
 }

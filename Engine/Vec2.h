@@ -3,32 +3,37 @@
 #include <iostream>
 
 struct Vec2 {
-	float m_x, m_y;
-	Vec2(float x, float y) : m_x(x), m_y(y) { }
-	Vec2() { m_x = 0; m_y = 0; }
-	Vec2(const Vec2& vec2) : m_x(vec2.m_x), m_y(vec2.m_y) { }
+    float x, y;
+	Vec2(float _x, float _y) : x(_x), y(_y) { }
+	Vec2() { x = 0; y = 0; }
+	Vec2(const Vec2& vec2) : x(vec2.x), y(vec2.y) { }
     Vec2 operator+(const Vec2& other) const {
-        return Vec2(m_x + other.m_x, m_y + other.m_y);
+        return Vec2(x + other.x, y + other.y);
     }
     Vec2 operator*(float scalar) const {
-        return Vec2(m_x * scalar, m_y * scalar);
+        return Vec2(x * scalar, y * scalar);
     }
     Vec2 operator/(float scalar) const {
-        return Vec2(m_x / scalar, m_y / scalar);
+        return Vec2(x / scalar, y / scalar);
     }
     bool operator==(Vec2 vec2) {
-        if (m_x == vec2.m_x && m_y == vec2.m_y)
+        if (x == vec2.x && y == vec2.y)
+            return true;
+        return false;
+    }
+    bool operator!=(Vec2 vec2) {
+        if (x != vec2.x || y != vec2.y)
             return true;
         return false;
     }
     float GetMagnitude() const {
-        return std::sqrt(m_x * m_x + m_y * m_y);
+        return std::sqrt(x * x + y * y);
     }
     void Normalize() {
-        float magnitude = std::sqrt(m_x * m_x + m_y * m_y);
+        float magnitude = std::sqrt(x * x + y * y);
         if (magnitude > 0.0f) {
-            m_x /= magnitude;
-            m_y /= magnitude;
+            x /= magnitude;
+            y /= magnitude;
         }
     }
 };

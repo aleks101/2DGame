@@ -2,13 +2,13 @@
 
 #include "App.h"
 #include "Assets.h"
-#include "Tile.h"
+#include "Map.h"
 #include "Player.h"
 #include "Collision.h"
 #include "PowerUp.h"
 #include "Follower.h"
 
-class Game : public Camera
+class Game
 {
 private:
 	SDL_Event ev;
