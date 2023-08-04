@@ -6,39 +6,56 @@ Game::Game() {
 }
 Game::~Game() {
 	delete player;
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
-
+	for (int i = 0; i < fixedObjects.size(); i++)
+		if (fixedObjects[i] != NULL) {
+			delete fixedObjects[i];
+			fixedObjects[i] = NULL;
+		}
+	std::cout << "fixedObjects deleted\n";
+	for (int i = 0; i < powerUps.size(); i++)
+		if (powerUps[i] != NULL) {
+			delete powerUps[i];
+			powerUps[i] = NULL;
+		}
+	std::cout << "powerUps deleted\n";
+	for (int i = 0; i < entities.size(); i++)
+		if (entities[i] != NULL) {
+			delete entities[i];
+			entities[i] = NULL;
+		}
+	std::cout << "entities deleted\n";
 	Assets::CleanTextures();
 	App::ApplicationQuit();
 }
 void Game::Setup() {
-	srand(time(NULL));
+	srand(time(0));
 
 	isRunning = true;
 	//dodaj texture
 	Assets::AddTexture(m_ren, "Files/Images/blue.png", IMG_INIT_PNG);
 	Assets::AddTexture(m_ren, "Files/Images/red.png", IMG_INIT_PNG);
+	Assets::AddTexture(m_ren, "Files/Images/player.jpg", IMG_INIT_JPG);
+	Assets::AddTexture(m_ren, "Files/Images/tile.jpg", IMG_INIT_JPG);
+
 	sceneTexture = SDL_CreateTexture(m_ren, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
 		SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	//SDL_SetTextureBlendMode(Assets::GetTexture("Files/Images/blue.png"), SDL_BLENDMODE_BLEND);
 	//SDL_SetTextureBlendMode(Assets::GetTexture("Files/Images/red.png"), SDL_BLENDMODE_BLEND);
 
-	player = new Player(m_ren, Assets::GetTexture("Files/Images/red.png"), &ev, { 600, 350, 50, 50 }, 1000);
+	player = new Player(m_ren, Assets::GetTexture("Files/Images/player.jpg"), &ev, { 600, 350, 50, 50 }, 1000);
 
-	objects.push_back(new Tile(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 100, 200, 200 }, player->GetDest(), true));
-	objects.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player->GetDest(), 100, 2.5f, 10, 300, 100));
-	powerUp = new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5));
+	map = new Map(player);
+	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
+
+	//fixedObjects.push_back(new Tile(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 100, 200, 200 }, player->GetDest(), true));
+	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 2.3f, 1.7f, 10, 500, 300));
+	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5)));
 
 	MainLoop();
 }
 void Game::Quit() {
 	isRunning = false;
-}
-void Game::DeleteObject(int index) {
-	delete objects[index];
-	objects.erase(objects.begin() + index);
 }
 void Game::MainLoop() {
 	while (isRunning) {
@@ -51,32 +68,52 @@ void Game::MainLoop() {
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 0);
 			SDL_RenderClear(m_ren);
 
-
+			map->Update();
 			//posodobi objekte
-			for (int i = 0; i < objects.size(); i++) {
-				objects[i]->Update();
-				objects[i]->UpdatePositionRelativeToPlayer();
-			}
-			if (powerUp != NULL) {
-				powerUp->Update();
-				powerUp->UpdatePositionRelativeToPlayer();
-				if(coll::CheckCollisionAABB(*powerUp->GetDest(), *player->GetDest()))
-					powerUp->Destroy();
-				if (powerUp->m_canBeDestroyed) {
-					delete powerUp;
-					powerUp = NULL;
-				}
-			}
-			player->Update();
-
-			for (int i = 0; i < objects.size(); i++) {
+			for (auto& object : fixedObjects) {
+				object->Update();
+				object->UpdatePositionRelativeToPlayer();
 				for (int j = 0; j < player->GetBullets().size(); j++) {
-					if (coll::CheckCollisionAABB(*objects[i]->GetScreen(), *player->GetBullets()[j]->GetScreen())) {
+					if (coll::CheckCollisionAABB(object->GetScreen(), player->GetBullets()[j]->GetScreen())) {
 						player->GetBullets()[j]->Destroy();
 					}
 				}
 			}
-
+			//posodobi sposobnosti
+			for (auto& powerUp : powerUps) {
+				if (powerUp != NULL) {
+					powerUp->Update();
+					powerUp->UpdatePositionRelativeToPlayer();
+					if (coll::CheckCollisionAABB(powerUp->GetDest(), player->GetDest()))
+						powerUp->Destroy();
+					if (powerUp->m_canBeDestroyed) {
+						delete powerUp;
+						powerUp = NULL;
+					}
+				}
+			}
+			//posodobi bitja
+			for (auto& entity : entities) {
+				if(entity!=NULL){
+					if (entity->GetHealth() <= 0) {
+						delete entity;
+						entity = NULL;
+					}
+					else {
+						entity->Update();
+						entity->UpdatePositionRelativeToPlayer();
+						for (int j = 0; j < player->GetBullets().size(); j++) {
+							if (coll::CheckCollisionAABB(entity->GetScreen(), player->GetBullets()[j]->GetScreen())) {
+								entity->RemoveHealth(player->GetBullets()[j]->m_damage);
+								player->GetBullets()[j]->Destroy();
+							}
+						}
+					}
+				}
+			}
+			player->Update();
+			if (!player->IsAlive())
+				isRunning = false;
 
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);

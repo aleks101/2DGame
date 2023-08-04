@@ -1,9 +1,14 @@
 #pragma once
 
-#include "Tile.h"
 #include <fstream>
 
+#include "Entity.h"
+#include "Tile.h"
+#include "Collision.h"
+
 struct TexID {
+	TexID(SDL_Texture* _tex, int _id) : tex(_tex), id(_id) {}
+	TexID(const TexID& texID) : tex(texID.tex), id(texID.id) {}
 	SDL_Texture* tex;
 	int id;
 };
@@ -11,9 +16,9 @@ class Map
 {
 private:
 	std::vector<Tile> m_tiles;
-	SDL_Rect* m_playerRect;
+	Entity* m_player;
 public:
-	Map(SDL_Rect* playerRect);
+	Map(Entity* player);
 	~Map();
 	void Update();
 	void Render();
@@ -21,5 +26,6 @@ public:
 	void RemoveTile(int index);
 	void MoveTilesFor(Vec2 newPos);
 	void MoveTilesTo(Vec2 newPos);
+	void CheckCollision(Entity* entity);
 };
 

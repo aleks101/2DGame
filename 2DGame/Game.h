@@ -17,8 +17,11 @@ private:
 	SDL_Renderer* m_ren;
 
 	Player* player;
-	PowerUp* powerUp;
-	std::vector<Object*> objects;
+	Map* map;
+
+	std::vector<Object*> fixedObjects;
+	std::vector<PowerUp*> powerUps;
+	std::vector<Entity*> entities;
 
 	SDL_Texture* sceneTexture;
 
@@ -29,6 +32,10 @@ public:
 	void Setup();
 	void Quit();
 	void MainLoop();
-	void DeleteObject(int index);
+	template<typename T>
+	void DeleteElement(std::vector<T> container, int index) {
+		delete container[index];
+		container.erase(container.begin() + index);
+	}
 };
 

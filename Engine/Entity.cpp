@@ -1,6 +1,11 @@
 #include "Entity.h"
 
-Entity::Entity(float health) : m_health(health), m_isAlive(true), m_velocity(Vec2(0,0)) {
+Entity::Entity(SDL_Rect dest, float health) 
+	: Object(dest), m_health(health), m_isAlive(true), m_velocity(Vec2(0,0)), m_player(nullptr) {
+	std::cout << "ENTITY CONSTRUCTED\n";
+}
+Entity::Entity(SDL_Rect dest, float health, Entity* player) 
+	: m_player(player), m_health(health), m_isAlive(true), m_velocity(Vec2(0,0)), Object(dest, player->GetDest()) {
 	std::cout << "ENTITY CONSTRUCTED\n";
 }
 Entity::~Entity() {
@@ -19,4 +24,8 @@ float Entity::GetHealth() const {
 }
 bool Entity::IsAlive() const {
 	return m_isAlive;
+}
+void Entity::Move() {
+	ChangeDestPosFor(m_velocity);
+	ChangeScreenPosFor(m_velocity);
 }

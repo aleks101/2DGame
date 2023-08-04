@@ -1,7 +1,8 @@
 #include "Follower.h"
 
-Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* playerDest,float health, float speed, float damage, int radius, int playerRadius) :
-	Object(dest, playerDest), Entity(health), m_speed(speed), m_damage(damage), m_wonderRadius(radius), m_searchPlayerRadius(playerRadius), m_enemyDest(playerDest) {
+Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player,float health, float attackSpeed, float searchSpeed, float damage, int radius, int playerRadius) :
+	Entity(dest, health, player), m_attackSpeed(attackSpeed), m_searchSpeed(searchSpeed), m_damage(damage),
+	m_wonderRadius(radius), m_searchPlayerRadius(playerRadius) {
 	m_ren = ren;
 	m_tex = tex;
 	m_isSearchPointSet = false;
@@ -21,21 +22,22 @@ void Follower::Update() {
 	if (m_health <= 0)
 		m_isAlive = false;
 	else {
-		Vec2 enemyCenter(m_enemyDest->x + m_enemyDest->w / 2, m_enemyDest->y + m_enemyDest->h / 2);
-		Vec2 enemyPos(m_enemyDest->x, m_enemyDest->y);
+		Vec2 enemyCenter(m_player->GetDest()->x + m_player->GetDest()->w / 2, m_player->GetDest()->y + m_player->GetDest()->h / 2);
+		Vec2 enemyPos(m_player->GetDest()->x, m_player->GetDest()->y);
 		Vec2 destPos(m_dest.x, m_dest.y);
 
 		if (IsPointInRadius(GetCenter(), enemyCenter, m_searchPlayerRadius)) {
 			//Player is in radius
 			m_isSearchPointSet = false;
-			if(m_velocity != physics::CalculateVelocity(destPos, enemyPos, m_speed))
-				m_velocity = physics::CalculateVelocity(destPos, enemyPos, m_speed);
+			m_velocity = physics::CalculateVelocity(destPos, enemyPos, m_attackSpeed);
+			if (coll::CheckCollisionAABB(&m_dest, m_player->GetDest()))
+				m_player->RemoveHealth(m_damage);
 		}
 		else if(!m_isSearchPointSet){
 			std::cout << "NEW SEARCH POINT\n";
 			if (destPos.x != m_wonderRadius && destPos.y != m_wonderRadius) {
 				m_destination = GetRandomPoint(destPos, m_wonderRadius);
-				m_velocity = physics::calculateVelocityProportional(destPos, m_destination, m_speed);
+				m_velocity = physics::CalculateVelocity(destPos, m_destination, m_searchSpeed);
 				m_isSearchPointSet = true;
 			}
 		}
@@ -43,16 +45,17 @@ void Follower::Update() {
 			std::cout << "SEARCH POINT REACHED\n";
 			m_isSearchPointSet = false;
 		}
-		else
-			std::cout << destPos.x << ", " << destPos.y << " : " << m_destination.x << ", " << m_destination.y << "\n";
-		Move();
+		else {
+			m_velocity = physics::CalculateVelocity(destPos, m_destination, m_searchSpeed);
+		}
+		Entity::Move();
 		Render();
 	}
 }
-void Follower::Move() {
-	ChangeDestPosFor(m_velocity);
-	ChangeScreenPosFor(m_velocity);
-}
+//void Follower::Move() {
+//	ChangeDestPosFor(m_velocity);
+//	ChangeScreenPosFor(m_velocity);
+//}
 bool Follower::IsPointInRadius(Vec2 centerPoint, Vec2 randomPoint, float radius) {
 	if (randomPoint.x > centerPoint.x - radius && randomPoint.x < centerPoint.x + radius &&
 		randomPoint.y > centerPoint.y - radius && randomPoint.y < centerPoint.y + radius) {
@@ -61,19 +64,14 @@ bool Follower::IsPointInRadius(Vec2 centerPoint, Vec2 randomPoint, float radius)
 	return false;
 }
 Vec2 Follower::GetRandomPoint(Vec2 centerPoint, int radius) {
-	/*int x = rand() % ((int)centerPoint.x - radius) + radius;
-	int y = rand() % ((int)centerPoint.y - radius) + radius;
+	int highEndX = centerPoint.x + radius;
+	int highEndY = centerPoint.y + radius;
 
-	return Vec2(x, y);*/
-	//// Seed the random number generator with the current time
-	//std::srand(static_cast<unsigned int>(std::time(0)));
+	int lowEndX = centerPoint.x - radius;
+	int lowEndY = centerPoint.y - radius;
 
-	// Generate a random angle in radians
-	float randomAngle = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * 2.0f * M_PI;
+	int x = (rand() % (highEndX - lowEndX + 1)) + lowEndX;
+	int y = (rand() % (highEndY - lowEndY + 1)) + lowEndY;
 
-	// Calculate the random x and y coordinates within the radius
-	int x = static_cast<int>(centerPoint.x + radius * std::cos(randomAngle));
-	int y = static_cast<int>(centerPoint.y + radius * std::sin(randomAngle));
-
-	return Vec2{ static_cast<float>(x), static_cast<float>(y) };
+	return Vec2(x, y);
 }

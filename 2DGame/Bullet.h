@@ -9,7 +9,6 @@ class Bullet : public Object, public Timer
 {
 private:
 	Uint32 m_lifeTime;
-	int m_damage;
 
 	const float constantVelocity;
 	Vec2 m_velocity;
@@ -25,5 +24,6 @@ public:
 	void Destroy();
 	void Move();
 	bool m_alive;
+	int m_damage;
 };
 

@@ -1,21 +1,22 @@
 #pragma once
 
-#include "Object.h"
 #include "Entity.h"
 #include "Bullet.h"
 
-class Player : public Object, public Entity
+class Player : public Entity
 {
 private:
 	bool m_right = false, m_left = false, m_up = false, m_down = false;
 	int m_xMouse, m_yMouse;
 	int m_xClick, m_yClick;
 	int m_attackRange;
+	const float m_speed = 5;
 
 	Bullet* m_bullets[30];
 	SDL_Event* m_ev;
 public:
 	Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest, float health);
+	~Player();
 	void Update();
 	void Render();
 
