@@ -66,19 +66,21 @@ void Map::MoveTilesTo(Vec2 newPos) {
 		tile.SetScreenPos(newPos);
 	}
 }
-void Map::CheckCollision(Entity* entity) {
+bool Map::CheckCollision(Object* entity) {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
 			if (coll::CheckCollisionAABB(tile.GetDest(), entity->GetDest())) {
-				if (coll::CheckCollisionX(tile.GetDest(), entity->GetDest())) {
-					entity->ChangeDestPosFor(Vec2(-entity->m_velocity.x, 0));
-					entity->ChangeScreenPosFor(Vec2(-entity->m_velocity.x, 0));
-				}
-				if (coll::CheckCollisionY(tile.GetDest(), entity->GetDest())) {
-					entity->ChangeDestPosFor(Vec2(0, -entity->m_velocity.y));
-					entity->ChangeScreenPosFor(Vec2(0, -entity->m_velocity.y));
-				}
+				//if (coll::CheckCollisionX(tile.GetDest(), entity->GetDest())) {
+				//	entity->ChangeDestPosFor(Vec2(-entity->m_velocity.x, 0));
+				//	entity->ChangeScreenPosFor(Vec2(-entity->m_velocity.x, 0));
+				//}
+				//if (coll::CheckCollisionY(tile.GetDest(), entity->GetDest())) {
+				//	entity->ChangeDestPosFor(Vec2(0, -entity->m_velocity.y));
+				//	entity->ChangeScreenPosFor(Vec2(0, -entity->m_velocity.y));
+				//}
+				return true;
 			}
 		}
 	}
+	return false;
 }

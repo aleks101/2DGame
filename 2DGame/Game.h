@@ -5,10 +5,12 @@
 #include "App.h"
 #include "Assets.h"
 #include "Map.h"
+#include "Text.h"
+
 #include "Player.h"
-#include "Collision.h"
 #include "PowerUp.h"
 #include "Follower.h"
+
 
 class Game
 {
@@ -18,6 +20,7 @@ private:
 
 	Player* player;
 	Map* map;
+	Text* playerHealth;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;

@@ -24,7 +24,12 @@ Game::~Game() {
 			entities[i] = NULL;
 		}
 	std::cout << "entities deleted\n";
+
 	Assets::CleanTextures();
+	Assets::CleanFonts();
+	Assets::CleanMusic();
+	Assets::CleanSounds();
+
 	App::ApplicationQuit();
 }
 void Game::Setup() {
@@ -37,6 +42,8 @@ void Game::Setup() {
 	Assets::AddTexture(m_ren, "Files/Images/player.jpg", IMG_INIT_JPG);
 	Assets::AddTexture(m_ren, "Files/Images/tile.jpg", IMG_INIT_JPG);
 
+	Assets::AddFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf", 22);
+
 	sceneTexture = SDL_CreateTexture(m_ren, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
 		SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -48,10 +55,11 @@ void Game::Setup() {
 	map = new Map(player);
 	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
 
-	//fixedObjects.push_back(new Tile(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 100, 200, 200 }, player->GetDest(), true));
 	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 2.3f, 1.7f, 10, 500, 300));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5)));
 
+	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 0, 0, 255 });
+	playerHealth->SetNoChangeText("Health: ");
 	MainLoop();
 }
 void Game::Quit() {
@@ -68,7 +76,13 @@ void Game::MainLoop() {
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 0);
 			SDL_RenderClear(m_ren);
 
+			playerHealth->Update();
+			playerHealth->ChangeText(player->GetHealth());
 			map->Update();
+			for (int i = 0; i < player->GetBullets().size(); i++) {
+				if(map->CheckCollision(player->GetBullets()[i]))
+					player->GetBullets()[i]->Destroy();
+			}
 			//posodobi objekte
 			for (auto& object : fixedObjects) {
 				object->Update();
