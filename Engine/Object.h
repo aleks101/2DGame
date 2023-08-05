@@ -10,6 +10,11 @@
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT  720
 
+//#ifndef DEBUG
+//#define LOG(msg) std::cout << msg << std::endl;
+//#endif // !DEBUG
+
+
 class Object : private Camera
 {
 public:

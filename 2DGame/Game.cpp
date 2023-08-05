@@ -6,6 +6,7 @@ Game::Game() {
 }
 Game::~Game() {
 	delete player;
+	delete map;
 	for (int i = 0; i < fixedObjects.size(); i++)
 		if (fixedObjects[i] != NULL) {
 			delete fixedObjects[i];
@@ -58,7 +59,7 @@ void Game::Setup() {
 	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 2.3f, 1.7f, 10, 500, 300));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5)));
 
-	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 0, 0, 255 });
+	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
 	playerHealth->SetNoChangeText("Health: ");
 	MainLoop();
 }
