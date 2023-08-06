@@ -12,19 +12,19 @@ Game::~Game() {
 			delete fixedObjects[i];
 			fixedObjects[i] = NULL;
 		}
-	std::cout << "fixedObjects deleted\n";
+	LOG("fixedObjects deleted\n");
 	for (int i = 0; i < powerUps.size(); i++)
 		if (powerUps[i] != NULL) {
 			delete powerUps[i];
 			powerUps[i] = NULL;
 		}
-	std::cout << "powerUps deleted\n";
+	LOG("powerUps deleted\n");
 	for (int i = 0; i < entities.size(); i++)
 		if (entities[i] != NULL) {
 			delete entities[i];
 			entities[i] = NULL;
 		}
-	std::cout << "entities deleted\n";
+	LOG("entities deleted\n");
 
 	Assets::CleanTextures();
 	Assets::CleanFonts();

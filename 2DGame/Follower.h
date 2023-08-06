@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Entity.h"
 #include "Physics.h"
+#include "Log.h"
 
 class Follower : public Entity
 {

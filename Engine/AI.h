@@ -4,6 +4,7 @@
 
 #include "Vec2.h"
 #include "Physics.h"
+#include "Log.h"
 
 class AI
 {

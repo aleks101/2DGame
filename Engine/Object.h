@@ -6,27 +6,23 @@
 #include <vector>
 
 #include "Camera.h"
+#include "Log.h"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT  720
-
-//#ifndef DEBUG 
-//#define LOG(msg) std::cout << msg << std::endl;
-//#endif // !DEBUG
-
 
 class Object : private Camera
 {
 public:
 	Object(SDL_Rect dest) : m_dest(dest), m_screen(dest),m_isSolid(true) { 
-		std::cout << "OBJECT CREATED\n";
+		LOG("OBJECT CREATED\n");
 	}
 	Object(SDL_Rect dest, SDL_Rect* playerDest) : m_dest(dest), m_screen(dest), m_isSolid(true), Camera(){
 		Init(playerDest);
-		std::cout << "OBJECT CREATED\n";
+		LOG("OBJECT CREATED\n");
 	}
 	virtual ~Object() {
-		std::cout << "OBJECT DESTROYED\n";
+		LOG("OBJECT DESTROYED\n");
 	}
 	virtual void Render() = 0;
 	virtual void Update() = 0;

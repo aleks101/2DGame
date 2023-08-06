@@ -10,10 +10,10 @@ Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* p
 	m_velocity = Vec2();
 	m_isAlive = true;
 	m_isPlayerInRadius = false;
-	std::cout << "FOLLOWER CREATED\n";
+	LOG("FOLLOWER CREATED\n");
 }
 Follower::~Follower() {
-	std::cout << "FOLLOWER DESTROYED\n";
+	LOG("FOLLOWER DESTROYED\n");
 }
 void Follower::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
@@ -34,7 +34,7 @@ void Follower::Update() {
 				m_player->RemoveHealth(m_damage);
 		}
 		else if(!m_isSearchPointSet){
-			std::cout << "NEW SEARCH POINT\n";
+			LOG("NEW SEARCH POINT\n");
 			if (destPos.x != m_wonderRadius && destPos.y != m_wonderRadius) {
 				m_destination = GetRandomPoint(destPos, m_wonderRadius);
 				m_velocity = physics::CalculateVelocity(destPos, m_destination, m_searchSpeed);
@@ -42,7 +42,7 @@ void Follower::Update() {
 			}
 		}
 		else if(IsPointInRadius(m_destination, destPos, 30)){
-			std::cout << "SEARCH POINT REACHED\n";
+			LOG("SEARCH POINT REACHED\n");
 			m_isSearchPointSet = false;
 		}
 		else {
@@ -52,10 +52,6 @@ void Follower::Update() {
 		Render();
 	}
 }
-//void Follower::Move() {
-//	ChangeDestPosFor(m_velocity);
-//	ChangeScreenPosFor(m_velocity);
-//}
 bool Follower::IsPointInRadius(Vec2 centerPoint, Vec2 randomPoint, float radius) {
 	if (randomPoint.x > centerPoint.x - radius && randomPoint.x < centerPoint.x + radius &&
 		randomPoint.y > centerPoint.y - radius && randomPoint.y < centerPoint.y + radius) {

@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Text.h"
 #include "Light.h"
+#include "Log.h"
 
 #include "Player.h"
 #include "PowerUp.h"

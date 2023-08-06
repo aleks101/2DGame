@@ -11,14 +11,16 @@ Text::Text(SDL_Renderer* ren, Vec2 pos, TTF_Font* _font, std::string _text, SDL_
 
 	SDL_Surface* surf = TTF_RenderText_Solid(font, text.c_str(), color);
 	if (!surf) {
-		std::cout << "Failed to render text: " << TTF_GetError() << std::endl;
+		LOG("Failed to render text: ");
+		LOG(TTF_GetError());
+		LOG("\n");
 	}
 	if (!m_ren)
-		std::cout << "renderer error" << std::endl;
+		LOG("renderer error");
 
 	m_tex = SDL_CreateTextureFromSurface(m_ren, surf);
 	if (!m_tex)
-		std::cout << "tex error" << std::endl;
+		LOG("tex error");
 
 	m_dest.w = surf->w;
 	m_dest.h = surf->h;
@@ -61,7 +63,7 @@ void Text::ChangeText(std::string _text) {
 		m_tex = SDL_CreateTextureFromSurface(m_ren, surf);
 		SDL_FreeSurface(surf);
 		SDL_QueryTexture(m_tex, NULL, NULL, &m_dest.w, &m_dest.h);
-		std::cout << "TEXT CHANGED\n";
+		LOG("TEXT CHANGED\n");
 	}
 }
 void Text::ChangeText(int num) {
@@ -72,7 +74,7 @@ void Text::ChangeText(int num) {
 		m_tex = SDL_CreateTextureFromSurface(m_ren, surf);
 		SDL_FreeSurface(surf);
 		SDL_QueryTexture(m_tex, NULL, NULL, &m_dest.w, &m_dest.h);
-		std::cout << "TEXT CHANGED\n";
+		LOG("TEXT CHANGED\n");
 	}
 }
 void Text::SetNoChangeText(int indexTo) {

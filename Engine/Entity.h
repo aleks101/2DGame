@@ -5,6 +5,7 @@
 #include "Object.h"
 #include "Collision.h"
 #include "Vec2.h"
+#include "Log.h"
 
 class Entity : public Object
 {

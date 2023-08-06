@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Tile.h"
 #include "Collision.h"
+#include "Log.h"
 
 struct TexID {
 	TexID(SDL_Texture* _tex, int _id) : tex(_tex), id(_id) {}

@@ -2,14 +2,14 @@
 
 Entity::Entity(SDL_Rect dest, float health) 
 	: Object(dest), m_health(health), m_isAlive(true), m_velocity(Vec2(0,0)), m_player(nullptr) {
-	std::cout << "ENTITY CONSTRUCTED\n";
+	LOG("ENTITY CONSTRUCTED\n");
 }
 Entity::Entity(SDL_Rect dest, float health, Entity* player) 
 	: m_player(player), m_health(health), m_isAlive(true), m_velocity(Vec2(0,0)), Object(dest, player->GetDest()) {
-	std::cout << "ENTITY CONSTRUCTED\n";
+	LOG("ENTITY CONSTRUCTED\n");
 }
 Entity::~Entity() {
-	std::cout << "ENTITY DECONSTRUCTED\n";
+	LOG("ENTITY DECONSTRUCTED\n");
 }
 void Entity::AddHealth(float health) {
 	m_health += health;

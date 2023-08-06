@@ -1,10 +1,10 @@
 #include "Map.h"
 
 Map::Map(Entity* player) : m_player(player) {
-	std::cout << "MAP CONSTRUCTED\n";
+	LOG("MAP CONSTRUCTED\n");
 }
 Map::~Map() {
-	std::cout << "MAP DESTRUCTED\n";
+	LOG("MAP DECONSTRUCTED\n");
 }
 void Map::Update() {
 	for (auto& tile : m_tiles) {
@@ -44,10 +44,12 @@ void Map::AddLayer(SDL_Renderer* ren, std::string filePath, std::vector<TexID> t
 				}
 			}
 		}
-		std::cout << "LAYER ADDED\n";
+		LOG("LAYER ADDED\n");
 	}
-	else
-		std::cout << "MAP FILE " << filePath << " NOT FOUND\n";
+	else {
+		LOG("MAP FILE ");
+		LOG(" NOT FOUND\n");
+	}
 	data.close();
 }
 void Map::RemoveTile(int index) {

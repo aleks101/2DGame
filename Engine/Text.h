@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 
 #include "Object.h"
+#include "Log.h"
 
 class Text : public Object
 {

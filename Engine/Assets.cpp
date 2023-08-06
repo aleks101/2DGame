@@ -10,10 +10,10 @@ void Assets::AddTexture(SDL_Renderer* ren, std::string imageFile, int flag) {
 	IMG_Init(flag);
 	SDL_Surface* surf = IMG_Load(imageFile.c_str());
 	if (surf == NULL)
-		std::cout << "SURF ERROR";
+		LOG("SURF ERROR\n");
 	SDL_Texture* tex = SDL_CreateTextureFromSurface(ren, surf);
 	if (tex == NULL)
-		std::cout << "TEX ERROR";
+		LOG("TEX ERROR\n");
 	SDL_FreeSurface(surf);
 
 	textures.push_back(Texture(imageFile, tex));
@@ -31,12 +31,14 @@ void Assets::CleanTextures() {
 }
 void Assets::AddFont(std::string fontFile, int size) {
 	if (TTF_Init() < 0) {
-		std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+		LOG("Error initializing SDL_ttf: ");
+		LOG(TTF_GetError());
 	}
 
 	TTF_Font* font = TTF_OpenFont(fontFile.c_str(), size);
 	if (!font) {
-		std::cout << "Failed to load font: " << TTF_GetError() << std::endl;
+		LOG("Failed to load font: ");
+		LOG(TTF_GetError());
 	}
 	
 	fonts.push_back(Font(fontFile, font));
@@ -56,11 +58,13 @@ void Assets::CleanFonts() {
 void Assets::AddSound(std::string soundFile) {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
-		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		LOG("SDL_mixer could not initialize! SDL_mixer Error: \n");
+		LOG(Mix_GetError());
 	}
 	Mix_Chunk* chunk = Mix_LoadWAV(soundFile.c_str());
 	if (chunk == NULL) {
-		printf("Failed to load beat chunk! SDL_mixer Error: %s\n", Mix_GetError());
+		LOG("Failed to load beat chunk! SDL_mixer Error: %s\n");
+		LOG(Mix_GetError());
 	}
 	sounds.push_back(AudioSound(soundFile, chunk));
 }
@@ -78,12 +82,14 @@ void Assets::CleanSounds() {
 void Assets::AddMusic(std::string musicFile) {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
-		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n");
+		LOG(Mix_GetError());
 	}
 	Mix_Music* music=Mix_LoadMUS(musicFile.c_str());
 	if (music == NULL)
 	{
-		printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+		LOG("Failed to load beat music! SDL_mixer Error: %s\n");
+		LOG(Mix_GetError());
 	}
 	musics.push_back(AudioMusic(musicFile, music));
 }
