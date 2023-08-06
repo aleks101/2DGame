@@ -6,6 +6,7 @@
 #include "Assets.h"
 #include "Map.h"
 #include "Text.h"
+#include "Light.h"
 
 #include "Player.h"
 #include "PowerUp.h"
@@ -21,6 +22,7 @@ private:
 	Player* player;
 	Map* map;
 	Text* playerHealth;
+	Light* light;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;

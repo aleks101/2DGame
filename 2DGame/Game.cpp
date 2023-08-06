@@ -56,6 +56,8 @@ void Game::Setup() {
 	map = new Map(player);
 	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
 
+	light = new Light(m_ren, Vec2(100, 100), 40, 60, { 255, 0,0,255 }, SDL_BLENDMODE_ADD);
+
 	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 2.3f, 1.7f, 10, 500, 300));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5)));
 
@@ -129,6 +131,7 @@ void Game::MainLoop() {
 			player->Update();
 			if (!player->IsAlive())
 				isRunning = false;
+			light->DrawLight();
 
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);
