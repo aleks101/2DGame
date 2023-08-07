@@ -15,9 +15,11 @@ class Object : private Camera
 {
 public:
 	Object(SDL_Rect dest) : m_dest(dest), m_screen(dest),m_isSolid(true) { 
+		m_playerRect = NULL;
 		LOG("OBJECT CREATED\n");
 	}
 	Object(SDL_Rect dest, SDL_Rect* playerDest) : m_dest(dest), m_screen(dest), m_isSolid(true), Camera(){
+		m_playerRect = playerDest;
 		Init(playerDest);
 		LOG("OBJECT CREATED\n");
 	}
@@ -68,6 +70,7 @@ public:
 	}
 
 	bool m_isSolid;
+	SDL_Rect* m_playerRect;
 protected:
 	SDL_Rect m_src;
 	SDL_Rect m_dest;

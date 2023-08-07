@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* playerDest, Vec2 screenPos, Vec2 point, float velocity, int damage, int speedModifier, unsigned int lifeTime) :
+Bullet::Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* playerDest, Vec2 screenPos, Vec2 point, float velocity, float damage, int speedModifier, unsigned int lifeTime) :
 	Object(m_dest, playerDest), m_point(point), constantVelocity(velocity), m_damage(damage), m_speedModifier(speedModifier), m_lifeTime(lifeTime), m_alive(true) {
 	m_ren = ren;
 	m_tex = tex;

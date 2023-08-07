@@ -23,7 +23,7 @@ private:
 	Player* player;
 	Map* map;
 	Text* playerHealth;
-	Light* light;
+	Text* ammoText;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;

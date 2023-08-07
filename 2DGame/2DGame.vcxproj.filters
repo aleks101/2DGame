@@ -22,15 +22,15 @@
     <Filter Include="Entity\Enemy">
       <UniqueIdentifier>{c760ffa1-7114-44ce-9b18-eb3b7e1c4d8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Weapons">
+      <UniqueIdentifier>{a877136b-1a38-426b-9756-b5ab96ec43a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2DGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PowerUp.cpp">
@@ -42,12 +42,15 @@
     <ClCompile Include="Follower.cpp">
       <Filter>Entity\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PowerUp.h">
@@ -58,6 +61,15 @@
     </ClInclude>
     <ClInclude Include="Follower.h">
       <Filter>Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

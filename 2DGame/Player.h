@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "Bullet.h"
+#include "Weapon.h"
 
 class Player : public Entity
 {
@@ -28,5 +29,7 @@ public:
 	void Move();
 	bool CheckForAttack();
 	void Attack();
+
+	Weapon<30>* m_gun;
 };
 

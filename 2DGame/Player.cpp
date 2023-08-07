@@ -5,6 +5,11 @@ Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest
 	m_ren = ren;
 	m_tex = tex;
 	m_velocity = Vec2(0, 0);
+
+	m_gun = new Weapon<30>(m_ren, m_tex, m_ev, m_dest, GetDest(), Vec2(m_screen.x, m_screen.y), 25, true, 2.5f, 30, 15, 4);
+	m_gun->PickUp();
+	m_gun->AddAmmo(300);
+
 	for (int i = 0; i < 30; i++)
 		m_bullets[i] = NULL;
 }
@@ -15,6 +20,7 @@ Player::~Player() {
 			m_bullets[i] = NULL;
 		}
 	}
+	delete m_gun;
 }
 void Player::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
@@ -23,23 +29,33 @@ void Player::Update() {
 	SDL_GetMouseState(&m_xMouse, &m_yMouse);
 	if (m_health <= 0)
 		m_isAlive = false;
+	//if (CheckForAttack()) {
+	//	m_xClick = m_xMouse;
+	//	
+	//	Attack();
+	//}
+	//for (int i = 0; i < 30; i++) {
+	//	if (m_bullets[i] != NULL && !m_bullets[i]->m_alive) {
+	//		delete m_bullets[i];
+	//		m_bullets[i] = NULL;
+	//	}
+	//	for (int i = 0; i < 30; i++) {
+	//		if (m_bullets[i] != NULL)
+	//			m_bullets[i]->UpdatePositionRelativeToPlayer();
+	//	}
+	//	if (m_bullets[i] != NULL)
+	//		m_bullets[i]->Update();
+	//}
 	if (CheckForAttack()) {
 		m_xClick = m_xMouse;
 		m_yClick = m_yMouse;
-		Attack();
+		m_gun->Shoot(m_xClick, m_yClick);
 	}
-	for (int i = 0; i < 30; i++) {
-		if (m_bullets[i] != NULL && !m_bullets[i]->m_alive) {
-			delete m_bullets[i];
-			m_bullets[i] = NULL;
-		}
-		for (int i = 0; i < 30; i++) {
-			if (m_bullets[i] != NULL)
-				m_bullets[i]->UpdatePositionRelativeToPlayer();
-		}
-		if (m_bullets[i] != NULL)
-			m_bullets[i]->Update();
+	if (m_ev->type == SDL_KEYDOWN) {
+		if (m_ev->key.keysym.sym == SDLK_r)
+			m_gun->Reload();
 	}
+	m_gun->Update();
 	Move();
 	Render();
 }
@@ -132,8 +148,12 @@ void Player::Attack() {
 }
 std::vector<Bullet*> Player::GetBullets() {
 	std::vector<Bullet*> bullets;
-	for (int i = 0; i < 30; i++)
-		if (m_bullets[i] != NULL)
-			bullets.push_back(m_bullets[i]);
+	//for (int i = 0; i < 30; i++)
+	//	if (m_bullets[i] != NULL)
+	//		bullets.push_back(m_bullets[i]);
+	//return bullets;
+	if (m_gun != NULL) {
+		bullets = m_gun->GetBullets();
+	}
 	return bullets;
 }

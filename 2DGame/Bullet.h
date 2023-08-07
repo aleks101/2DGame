@@ -15,7 +15,7 @@ private:
 	Vec2 m_point;
 	int m_speedModifier;
 public:
-	Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* playerDest, Vec2 screenPos, Vec2 point, float velocity, int damage, int speedModifier, unsigned int lifeTime);
+	Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* playerDest, Vec2 screenPos, Vec2 point, float velocity, float damage, int speedModifier, unsigned int lifeTime);
 	SDL_Rect* GetDest() { return &m_dest; }
 	SDL_Rect* GetSrc() { return &m_src; }
 	SDL_Rect* GetScreen() { return &m_screen; }
@@ -24,6 +24,6 @@ public:
 	void Destroy();
 	void Move();
 	bool m_alive;
-	int m_damage;
+	float m_damage;
 };
 

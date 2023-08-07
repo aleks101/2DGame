@@ -56,13 +56,15 @@ void Game::Setup() {
 	map = new Map(player);
 	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
 
-	light = new Light(m_ren, Vec2(100, 100), 40, 60, { 255, 0,0,255 }, SDL_BLENDMODE_ADD);
-
 	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 2.3f, 1.7f, 10, 500, 300));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5)));
 
 	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
 	playerHealth->SetNoChangeText("Health: ");
+
+	ammoText = new Text(m_ren, Vec2(0, 20), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "ammo", { 255, 255, 255, 255 });
+	ammoText->SetNoChangeText(player->m_gun->m_magSize);
+
 	MainLoop();
 }
 void Game::Quit() {
@@ -79,8 +81,6 @@ void Game::MainLoop() {
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 0);
 			SDL_RenderClear(m_ren);
 
-			playerHealth->Update();
-			playerHealth->ChangeText(player->GetHealth());
 			map->Update();
 			for (int i = 0; i < player->GetBullets().size(); i++) {
 				if(map->CheckCollision(player->GetBullets()[i]))
@@ -131,7 +131,10 @@ void Game::MainLoop() {
 			player->Update();
 			if (!player->IsAlive())
 				isRunning = false;
-			light->DrawLight();
+			playerHealth->Update();
+			playerHealth->ChangeText(player->GetHealth());
+			ammoText->Update();
+			ammoText->ChangeText(player->m_gun->GetMagSize());
 
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);
