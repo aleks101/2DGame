@@ -68,10 +68,20 @@ void Map::MoveTilesTo(Vec2 newPos) {
 		tile.SetScreenPos(newPos);
 	}
 }
-bool Map::CheckCollision(Object* entity) {
+bool Map::CheckCollisionDest(Object* entity) {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
 			if (coll::CheckCollisionAABB(tile.GetDest(), entity->GetDest())) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool Map::CheckCollisionScreen(Object* entity) {
+	for (auto& tile : m_tiles) {
+		if (tile.m_isSolid) {
+			if (coll::CheckCollisionAABB(tile.GetScreen(), entity->GetScreen())) {
 				return true;
 			}
 		}

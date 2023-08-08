@@ -4,7 +4,6 @@ Bullet::Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* 
 	Object(m_dest, playerDest), m_point(point), constantVelocity(velocity), m_damage(damage), m_speedModifier(speedModifier), m_lifeTime(lifeTime), m_alive(true) {
 	m_ren = ren;
 	m_tex = tex;
-	m_dest = destPos;
 	m_screen = destPos;
 	m_screen.x = screenPos.x;
 	m_screen.y = screenPos.y;

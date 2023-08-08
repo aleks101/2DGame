@@ -68,6 +68,9 @@ public:
 	inline virtual Vec2 GetCenter() {
 		return Vec2(m_dest.x + m_dest.w / 2, m_dest.y + m_dest.h / 2);
 	}
+	inline virtual Vec2 GetPos() {
+		return Vec2(m_dest.x, m_dest.y);
+	}
 
 	bool m_isSolid;
 	SDL_Rect* m_playerRect;

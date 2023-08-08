@@ -45,9 +45,6 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -67,9 +64,6 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

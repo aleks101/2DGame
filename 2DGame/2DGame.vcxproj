@@ -159,7 +159,6 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Follower.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerUp.cpp" />
   </ItemGroup>
@@ -172,7 +171,6 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Follower.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Weapon.h" />

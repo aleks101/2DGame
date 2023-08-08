@@ -12,7 +12,7 @@
 #include "Player.h"
 #include "PowerUp.h"
 #include "Follower.h"
-
+#include "Weapon.h"
 
 class Game
 {
@@ -24,6 +24,7 @@ private:
 	Map* map;
 	Text* playerHealth;
 	Text* ammoText;
+	Weapon<15>* rifle;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;

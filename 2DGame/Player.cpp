@@ -6,21 +6,10 @@ Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest
 	m_tex = tex;
 	m_velocity = Vec2(0, 0);
 
-	m_gun = new Weapon<30>(m_ren, m_tex, m_ev, m_dest, GetDest(), Vec2(m_screen.x, m_screen.y), 25, true, 2.5f, 30, 15, 4);
-	m_gun->PickUp();
-	m_gun->AddAmmo(300);
-
-	for (int i = 0; i < 30; i++)
-		m_bullets[i] = NULL;
+	m_gun = NULL;
 }
 Player::~Player() {
-	for (int i = 0; i < 30; i++) {
-		if (m_bullets[i] != NULL) {
-			delete m_bullets[i];
-			m_bullets[i] = NULL;
-		}
-	}
-	delete m_gun;
+
 }
 void Player::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
@@ -29,33 +18,23 @@ void Player::Update() {
 	SDL_GetMouseState(&m_xMouse, &m_yMouse);
 	if (m_health <= 0)
 		m_isAlive = false;
-	//if (CheckForAttack()) {
-	//	m_xClick = m_xMouse;
-	//	
-	//	Attack();
-	//}
-	//for (int i = 0; i < 30; i++) {
-	//	if (m_bullets[i] != NULL && !m_bullets[i]->m_alive) {
-	//		delete m_bullets[i];
-	//		m_bullets[i] = NULL;
-	//	}
-	//	for (int i = 0; i < 30; i++) {
-	//		if (m_bullets[i] != NULL)
-	//			m_bullets[i]->UpdatePositionRelativeToPlayer();
-	//	}
-	//	if (m_bullets[i] != NULL)
-	//		m_bullets[i]->Update();
-	//}
-	if (CheckForAttack()) {
+	if (CheckForAttack() && m_gun != NULL) {
 		m_xClick = m_xMouse;
 		m_yClick = m_yMouse;
-		m_gun->Shoot(m_xClick, m_yClick);
+		(*m_gun)->Shoot(m_xClick, m_yClick);
 	}
 	if (m_ev->type == SDL_KEYDOWN) {
-		if (m_ev->key.keysym.sym == SDLK_r)
-			m_gun->Reload();
+		if (m_ev->key.keysym.sym == SDLK_r && m_gun != NULL)
+				(*m_gun)->Reload();
+		if (m_ev->key.keysym.sym == SDLK_q && m_gun != NULL) {
+			(*m_gun)->m_isPickedUp = false;
+			(*m_gun)->SetDestPos(Vec2(m_dest.x - m_dest.w, m_dest.y - m_dest.h));
+			(*m_gun)->SetScreenPos(Vec2(m_screen.x - m_screen.w, m_screen.y - m_screen.h));
+			m_gun = NULL;
+		}
 	}
-	m_gun->Update();
+	if (m_gun != NULL)
+		(*m_gun)->Update();
 	Move();
 	Render();
 }
@@ -127,33 +106,16 @@ void Player::Move() {
 bool Player::CheckForAttack() {
 	int xCenter = m_screen.x + m_screen.w / 2, yCenter = m_screen.y + m_screen.h / 2;
 	if (m_xMouse >= xCenter - m_attackRange && m_xMouse <= xCenter + m_attackRange && m_yMouse >= yCenter - m_attackRange && m_yMouse <= yCenter + m_attackRange) {
-		if (m_ev->type == SDL_MOUSEBUTTONDOWN) {
-			if (m_ev->button.button == SDL_BUTTON_LEFT) {
-				return true;
-			}
-		}
+		return true;
 	}
 	return false;
 }
 void Player::Attack() {
-	int size = 15;
-	for (int i = 0; i < 30; i++) {
-		if (m_bullets[i] == NULL) {
-			m_bullets[i] = new Bullet(m_ren, m_tex, {m_dest.x+m_dest.w/2 - size/2, m_dest.y+m_dest.h/2 - size/2, size, size}, 
-				GetDest(), Vec2(m_screen.x + m_screen.w / 2 - size / 2, m_screen.y + m_screen.h / 2 - size / 2), 
-				Vec2(m_xClick, m_yClick), 9, 30, 0, 3);
-			break;
-		}
-	}
+	
 }
 std::vector<Bullet*> Player::GetBullets() {
 	std::vector<Bullet*> bullets;
-	//for (int i = 0; i < 30; i++)
-	//	if (m_bullets[i] != NULL)
-	//		bullets.push_back(m_bullets[i]);
-	//return bullets;
-	if (m_gun != NULL) {
-		bullets = m_gun->GetBullets();
-	}
+	if (m_gun != NULL)
+		bullets = (*m_gun)->GetBullets();
 	return bullets;
 }

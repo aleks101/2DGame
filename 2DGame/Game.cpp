@@ -25,6 +25,8 @@ Game::~Game() {
 			entities[i] = NULL;
 		}
 	LOG("entities deleted\n");
+	if (rifle != NULL)
+		delete rifle;
 
 	Assets::CleanTextures();
 	Assets::CleanFonts();
@@ -42,6 +44,7 @@ void Game::Setup() {
 	Assets::AddTexture(m_ren, "Files/Images/red.png", IMG_INIT_PNG);
 	Assets::AddTexture(m_ren, "Files/Images/player.jpg", IMG_INIT_JPG);
 	Assets::AddTexture(m_ren, "Files/Images/tile.jpg", IMG_INIT_JPG);
+	Assets::AddTexture(m_ren, "Files/Images/Rifle.jpg", IMG_INIT_JPG);
 
 	Assets::AddFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf", 22);
 
@@ -63,7 +66,10 @@ void Game::Setup() {
 	playerHealth->SetNoChangeText("Health: ");
 
 	ammoText = new Text(m_ren, Vec2(0, 20), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "ammo", { 255, 255, 255, 255 });
-	ammoText->SetNoChangeText(player->m_gun->m_magSize);
+
+	SDL_Rect pos = { 500, 500, 25, 25 };
+	rifle = new Weapon<15>(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), &ev, pos, player->GetDest(), player->GetScreen(), 75, true, 7.5f, 20, 12, 6);
+	rifle->AddAmmo(75);
 
 	MainLoop();
 }
@@ -83,10 +89,10 @@ void Game::MainLoop() {
 
 			map->Update();
 			for (int i = 0; i < player->GetBullets().size(); i++) {
-				if(map->CheckCollision(player->GetBullets()[i]))
+				if(map->CheckCollisionScreen(player->GetBullets()[i]))
 					player->GetBullets()[i]->Destroy();
 			}
-			//posodobi objekte
+			//update fixed objects
 			for (auto& object : fixedObjects) {
 				object->Update();
 				object->UpdatePositionRelativeToPlayer();
@@ -96,7 +102,7 @@ void Game::MainLoop() {
 					}
 				}
 			}
-			//posodobi sposobnosti
+			//update powerups
 			for (auto& powerUp : powerUps) {
 				if (powerUp != NULL) {
 					powerUp->Update();
@@ -109,7 +115,7 @@ void Game::MainLoop() {
 					}
 				}
 			}
-			//posodobi bitja
+			//update entities
 			for (auto& entity : entities) {
 				if(entity!=NULL){
 					if (entity->GetHealth() <= 0) {
@@ -128,13 +134,26 @@ void Game::MainLoop() {
 					}
 				}
 			}
+			if (rifle != NULL) {
+				rifle->Update();
+				rifle->UpdatePositionRelativeToPlayer();
+				if (coll::CheckCollisionAABB(player->GetDest(), rifle->GetDest())) {
+					player->m_gun = &rifle;
+					rifle->m_isPickedUp = true;
+				}
+			}
+
+			//update player
 			player->Update();
 			if (!player->IsAlive())
 				isRunning = false;
+			//update text
+			if (rifle->m_isPickedUp) {
+				ammoText->Update();
+				ammoText->ChangeText((*player->m_gun)->GetAmmo());
+			}
 			playerHealth->Update();
 			playerHealth->ChangeText(player->GetHealth());
-			ammoText->Update();
-			ammoText->ChangeText(player->m_gun->GetMagSize());
 
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);

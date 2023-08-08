@@ -27,6 +27,7 @@ public:
 	void RemoveTile(int index);
 	void MoveTilesFor(Vec2 newPos);
 	void MoveTilesTo(Vec2 newPos);
-	bool CheckCollision(Object* entity);
+	bool CheckCollisionDest(Object* entity);
+	bool CheckCollisionScreen(Object* entity);
 };
 

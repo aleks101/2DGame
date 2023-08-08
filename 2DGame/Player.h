@@ -13,8 +13,9 @@ private:
 	int m_attackRange;
 	const float m_speed = 5;
 
-	Bullet* m_bullets[30];
 	SDL_Event* m_ev;
+public:
+	Weapon<15>** m_gun;
 public:
 	Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest, float health);
 	~Player();
@@ -29,7 +30,5 @@ public:
 	void Move();
 	bool CheckForAttack();
 	void Attack();
-
-	Weapon<30>* m_gun;
 };
 
