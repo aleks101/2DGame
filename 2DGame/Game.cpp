@@ -7,6 +7,8 @@ Game::Game() {
 Game::~Game() {
 	delete player;
 	delete map;
+	delete playerHealth;
+	delete ammoText;
 	for (int i = 0; i < fixedObjects.size(); i++)
 		if (fixedObjects[i] != NULL) {
 			delete fixedObjects[i];
@@ -70,6 +72,8 @@ void Game::Setup() {
 	SDL_Rect pos = { 500, 500, 25, 25 };
 	rifle = new Weapon<15>(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), &ev, pos, player->GetDest(), player->GetScreen(), 75, true, 7.5f, 20, 12, 6);
 	rifle->AddAmmo(75);
+
+	ammo = new Ammo(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50);
 
 	MainLoop();
 }
@@ -140,6 +144,14 @@ void Game::MainLoop() {
 				if (coll::CheckCollisionAABB(player->GetDest(), rifle->GetDest())) {
 					player->m_gun = &rifle;
 					rifle->m_isPickedUp = true;
+				}
+			}
+			if (ammo != NULL) {
+				ammo->Update();
+				ammo->UpdatePositionRelativeToPlayer();
+				if (!ammo->m_isAlive) {
+					delete ammo;
+					ammo = NULL;
 				}
 			}
 

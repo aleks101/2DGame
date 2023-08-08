@@ -136,7 +136,7 @@ void Weapon<T>::Shoot(int X, int Y) {
 }
 template<int T>
 void Weapon<T>::AddAmmo(int amount) {
-	m_ammo = amount;
+	m_ammo += amount;
 }
 template<int T>
 void Weapon<T>::Drop() {

@@ -13,6 +13,7 @@
 #include "PowerUp.h"
 #include "Follower.h"
 #include "Weapon.h"
+#include "Ammo.h"
 
 class Game
 {
@@ -25,6 +26,7 @@ private:
 	Text* playerHealth;
 	Text* ammoText;
 	Weapon<15>* rifle;
+	Ammo* ammo;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;
