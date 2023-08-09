@@ -24,8 +24,12 @@ void Map::Update() {
 	Render();
 }
 void Map::Render() {
-	for (auto& tile : m_tiles)
-		tile.Update();
+	SDL_Rect* screen;
+	for (auto& tile : m_tiles) {
+		screen = tile.GetScreen();
+		if (!(screen->x + screen->w < 0 || screen->y + screen->h < 0 || screen->x > SCREEN_WIDTH || screen->y >SCREEN_HEIGHT))
+			tile.Update();
+	}
 }
 void Map::AddLayer(SDL_Renderer* ren, std::string filePath, std::vector<TexID> textures, Vec2 startPos, int size, bool isSolid) {
 	std::ifstream data;
@@ -38,7 +42,7 @@ void Map::AddLayer(SDL_Renderer* ren, std::string filePath, std::vector<TexID> t
 				data >> id;
 				for (int k = 0; k < textures.size(); k++) {
 					if (textures[k].id == id) {
-						m_tiles.push_back(Tile(ren, textures[k].tex, { (int)startPos.x + size * j, (int)startPos.y + size * i, size, size }, m_player->GetDest(), isSolid));
+						m_tiles.push_back(Tile(ren, textures[k].tex, { static_cast<int>(startPos.x) + size * j, static_cast<int>(startPos.y) + size * i, size, size }, m_player->GetDest(), isSolid));
 						break;
 					}
 				}

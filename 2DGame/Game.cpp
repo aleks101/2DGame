@@ -61,7 +61,7 @@ void Game::Setup() {
 	map = new Map(player);
 	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
 
-	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 2.3f, 1.7f, 10, 500, 300));
+	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 3.7f, 1.7f, 1, 500, 300));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player->GetDest(), Ability(0,0,0,5)));
 
 	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
@@ -160,7 +160,7 @@ void Game::MainLoop() {
 			if (!player->IsAlive())
 				isRunning = false;
 			//update text
-			if (rifle->m_isPickedUp) {
+			if (rifle!=NULL && rifle->m_isPickedUp) {
 				ammoText->Update();
 				ammoText->ChangeText((*player->m_gun)->GetAmmo());
 			}

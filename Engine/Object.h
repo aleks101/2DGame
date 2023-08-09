@@ -47,16 +47,18 @@ public:
 		m_dest = newDest;
 	}
 	inline virtual void ChangeScreenPosFor(Vec2 vec2) {
-		m_screen.x += vec2.x;
-		m_screen.y += vec2.y;
+		Vec2 roundedVelocity(static_cast<int>(vec2.x), static_cast<int>(vec2.y));
+		m_screen.x += roundedVelocity.x;
+		m_screen.y += roundedVelocity.y;
 	}
 	inline virtual void SetScreenPos(Vec2 vec2) {
 		m_screen.x = vec2.x;
 		m_screen.y = vec2.y;
 	}
 	inline virtual void ChangeDestPosFor(Vec2 vec2) {
-		m_dest.x += vec2.x;
-		m_dest.y += vec2.y;
+		Vec2 roundedVelocity(static_cast<int>(vec2.x), static_cast<int>(vec2.y));
+		m_dest.x += roundedVelocity.x;
+		m_dest.y += roundedVelocity.y;
 	}
 	inline virtual void SetDestPos(Vec2 vec2) {
 		m_dest.x = vec2.x;

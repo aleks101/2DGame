@@ -3,6 +3,7 @@
 #include <SDL.h>
 
 #include "Vec2.h"
+#include "Log.h"
 
 class Camera {
 private:

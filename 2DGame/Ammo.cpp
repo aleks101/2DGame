@@ -13,8 +13,8 @@ Ammo::~Ammo() {
 void Ammo::Update() {
 	if (m_isAlive) {
 		if (coll::CheckCollisionAABB(&m_dest, m_player->GetDest())) {
-			m_isAlive = false;
 			if (m_player->m_gun != NULL) {
+				m_isAlive = false;
 				(*m_player->m_gun)->AddAmmo(m_ammo);
 			}
 		}

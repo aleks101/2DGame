@@ -66,9 +66,9 @@ void PowerUp::Destroy() {
 
 		for (int i = 0; i < 24; ++i)
 		{
-			timeToLive = 0.4 - (float)(rand() % 15) / 100;
+			timeToLive = 0.4 - static_cast<float>(rand() % 15) / 100;
 			size = 7 - rand()%4;
-			speedValue = 4 - (float)(rand()%8)/100;
+			speedValue = 4 - static_cast<float>(rand()%8)/100;
 			// Calculate the angle for the current particle
 			float angle = i * angleStep;
 

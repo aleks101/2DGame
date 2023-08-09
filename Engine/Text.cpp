@@ -63,7 +63,6 @@ void Text::ChangeText(std::string _text) {
 		m_tex = SDL_CreateTextureFromSurface(m_ren, surf);
 		SDL_FreeSurface(surf);
 		SDL_QueryTexture(m_tex, NULL, NULL, &m_dest.w, &m_dest.h);
-		LOG("TEXT CHANGED\n");
 	}
 }
 void Text::ChangeText(int num) {
@@ -74,7 +73,6 @@ void Text::ChangeText(int num) {
 		m_tex = SDL_CreateTextureFromSurface(m_ren, surf);
 		SDL_FreeSurface(surf);
 		SDL_QueryTexture(m_tex, NULL, NULL, &m_dest.w, &m_dest.h);
-		LOG("TEXT CHANGED\n");
 	}
 }
 void Text::SetNoChangeText(int indexTo) {

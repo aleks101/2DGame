@@ -22,7 +22,7 @@ void Particle::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
 }
 void Particle::Update() {
-	if (m_lifetime > ((float)m_timer.GetMili())/1000) {
+	if (m_lifetime > (static_cast<float>(m_timer.GetMili()))/1000) {
 		m_opacity -= rand()%8;
 		Move();
 		Render();
