@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "PowerUp.h"
 #include "Follower.h"
+#include "Shooter.h"
 #include "Weapon.h"
 #include "Ammo.h"
 

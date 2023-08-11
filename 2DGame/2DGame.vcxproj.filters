@@ -48,6 +48,9 @@
     <ClCompile Include="Ammo.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="Shooter.cpp">
+      <Filter>Entity\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="Ammo.h">
       <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooter.h">
+      <Filter>Entity\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

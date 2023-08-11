@@ -70,8 +70,11 @@ public:
 	inline virtual Vec2 GetCenter() {
 		return Vec2(m_dest.x + m_dest.w / 2, m_dest.y + m_dest.h / 2);
 	}
-	inline virtual Vec2 GetPos() {
+	inline virtual Vec2 GetDestPos() {
 		return Vec2(m_dest.x, m_dest.y);
+	}
+	inline virtual Vec2 GetScreenPos() {
+		return Vec2(m_screen.x, m_screen.y);
 	}
 
 	bool m_isSolid;

@@ -1,7 +1,7 @@
 #include "Follower.h"
 
-Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player,float health, float attackSpeed, float searchSpeed, float damage, int radius, int playerRadius) :
-	Entity(dest, health, player), m_attackSpeed(attackSpeed), m_searchSpeed(searchSpeed), m_damage(damage),
+Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, float health, float attackSpeed, float searchSpeed, float damage, int radius, int playerRadius) :
+	Entity(dest, health, player, map), m_attackSpeed(attackSpeed), m_searchSpeed(searchSpeed), m_damage(damage),
 	m_wonderRadius(radius), m_searchPlayerRadius(playerRadius) {
 	m_ren = ren;
 	m_tex = tex;
@@ -33,7 +33,7 @@ void Follower::Update() {
 			if (coll::CheckCollisionAABB(&m_dest, m_player->GetDest()))
 				m_player->RemoveHealth(m_damage);
 		}
-		else if(!m_isSearchPointSet){
+		else if (!m_isSearchPointSet) {
 			LOG("NEW SEARCH POINT\n");
 			if (destPos.x != m_wonderRadius && destPos.y != m_wonderRadius) {
 				m_destination = GetRandomPoint(destPos, m_wonderRadius);
@@ -41,7 +41,7 @@ void Follower::Update() {
 				m_isSearchPointSet = true;
 			}
 		}
-		else if(IsPointInRadius(m_destination, destPos, 30)){
+		else if (IsPointInRadius(m_destination, destPos, 30) || Entity::CheckCollisionWithMap()) {
 			LOG("SEARCH POINT REACHED\n");
 			m_isSearchPointSet = false;
 		}

@@ -61,7 +61,8 @@ void Game::Setup() {
 	map = new Map(player);
 	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
 
-	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, 100, 3.7f, 1.7f, 1, 500, 300));
+	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 100, 3.7f, 1.7f, 5, 500, 300));
+	entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 90, 500));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player, Ability(500,100,5,5)));
 
 	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
@@ -69,8 +70,7 @@ void Game::Setup() {
 
 	ammoText = new Text(m_ren, Vec2(0, 20), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "ammo", { 255, 255, 255, 255 });
 
-	SDL_Rect pos = { 500, 500, 25, 25 };
-	rifle = new Weapon<15>(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), &ev, pos, player->GetDest(), player->GetScreen(), 75, true, 7.5f, 20, 12, 6);
+	rifle = new Weapon<15>(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), &ev, { 500, 500, 25, 25 }, player->GetDest(), player->GetScreen(), 75, true, 7.5f, 20, 12, 6);
 	rifle->AddAmmo(75);
 
 	ammo = new Ammo(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50);
