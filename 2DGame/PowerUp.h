@@ -2,6 +2,8 @@
 
 #include "Object.h"
 #include "Particle.h"
+#include "Timer.h"
+#include "Player.h"
 
 struct Ability {
 	Ability() : m_health(0), m_speed(0), m_power(0), m_time(0) {}
@@ -17,9 +19,18 @@ struct Ability {
 	int m_power;
 	unsigned int m_time;
 };
-class PowerUp : public Object, public Ability {
+class PowerUp : public Object, public Ability, private Timer {
+private:
+	Player* m_player;
+	bool m_isAlive;
+	Particle* m_particles[24];
+	bool m_addedHealth;
+
+	Vec2 m_orSpeed;
+	float m_orDamage;
+	bool m_activatePower;
 public:
-	PowerUp(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* player, Ability ability);
+	PowerUp(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Player* player, Ability ability);
 	~PowerUp();
 	SDL_Rect* GetDest();
 	SDL_Rect* GetScreen();
@@ -27,12 +38,9 @@ public:
 	void Render();
 	void Update();
 
-	Ability GetAbility();
+	void ActivateAbility();
+	void ApplyAbility();
 	void Destroy();
 
 	bool m_canBeDestroyed;
-private:
-	SDL_Rect* m_playerRect;
-	bool m_isAlive;
-	Particle* m_particles[24];
 };

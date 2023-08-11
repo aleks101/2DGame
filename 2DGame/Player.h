@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Bullet.h"
 #include "Weapon.h"
+#include "Light.h"
 
 class Player : public Entity
 {
@@ -14,8 +15,9 @@ private:
 	const float m_speed = 5;
 
 	SDL_Event* m_ev;
+	Light m_light;
 public:
-	Weapon<15>** m_gun;
+	Weapon<15>* m_gun;
 public:
 	Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest, float health);
 	~Player();

@@ -18,7 +18,6 @@ private:
 
 	float m_bulletSpeed;
 	int m_currMagPos;
-	float m_damage;
 	int m_bulletSize;
 	unsigned int m_bulletLifeTime;
 	bool m_holdFire;
@@ -44,6 +43,7 @@ public:
 	const int m_magSize = T;
 	int m_ammo;
 	bool m_isPickedUp;
+	float m_damage;
 };
 template<int T>
 Weapon<T>::Weapon(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest, SDL_Rect* playerDest, SDL_Rect* playerScreen, Uint32 fireDelay, bool holdFire, float bulletSpeed, float damage, int size, unsigned int lifetime) :

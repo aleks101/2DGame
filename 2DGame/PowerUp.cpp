@@ -1,12 +1,13 @@
 #include "PowerUp.h"
 
-PowerUp::PowerUp(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* player, Ability ability) 
-	: Object(dest, player), Ability(ability) {
+PowerUp::PowerUp(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Player* player, Ability ability) 
+	: Object(dest, player->GetDest()), Ability(ability), m_player(player) {
 	m_ren = ren;
 	m_tex = tex;
 	m_canBeDestroyed = false;
 	m_isAlive = true;
-	m_playerRect = player;
+	m_addedHealth = false;
+	m_activatePower = false;
 	for (int i = 0; i < 24; i++)
 		m_particles[i] = NULL;
 }
@@ -15,8 +16,15 @@ PowerUp::~PowerUp() {
 		delete part;
 	}
 }
-Ability PowerUp::GetAbility() {
-	return Ability(m_health, m_speed, m_power, m_time);
+void PowerUp::ActivateAbility() {
+	if (!m_activatePower) {
+		Start();
+		Destroy();
+		if (m_player->m_gun != NULL)
+			m_orDamage = m_player->m_gun->m_damage;
+		m_orSpeed = m_player->m_velocity;
+	}
+	m_activatePower = true;
 }
 SDL_Rect* PowerUp::GetDest() { 
 	return &m_dest; 
@@ -41,14 +49,11 @@ void PowerUp::Update() {
 				m_particles[i]->UpdatePositionRelativeToPlayer();
 			}
 		}
-		for (int i = 0; i < 24; i++) {
-			if (m_particles[i] != NULL && m_particles[i]->m_isDead)
-				m_canBeDestroyed = true;
-			else {
-				m_canBeDestroyed = false;
-				break;
-			}
+		if (m_activatePower && GetSec() < m_time) {
+			ApplyAbility();
 		}
+		else
+			m_canBeDestroyed = true;
 	}
 }
 void PowerUp::Destroy() {
@@ -92,4 +97,13 @@ void PowerUp::Destroy() {
 
 		}
 	}
+}
+void PowerUp::ApplyAbility() {
+	m_player->m_velocity = m_orSpeed * m_speed;
+	if (!m_addedHealth) {
+		m_player->AddHealth(m_health);
+		m_addedHealth = true;
+	}
+	if (m_player->m_gun != NULL)
+		m_player->m_gun->m_damage = m_orDamage * m_power;
 }

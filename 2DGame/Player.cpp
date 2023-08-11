@@ -6,6 +6,8 @@ Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest
 	m_tex = tex;
 	m_velocity = Vec2(0, 0);
 
+	m_light = Light(ren, GetCenter(), m_dest.w-16, 190, { 255, 255, 255, 255 }, SDL_BLENDMODE_ADD);
+
 	m_gun = NULL;
 }
 Player::~Player() {
@@ -13,6 +15,7 @@ Player::~Player() {
 }
 void Player::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
+	//m_light.DrawLight();
 }
 void Player::Update() {
 	SDL_GetMouseState(&m_xMouse, &m_yMouse);
@@ -21,20 +24,20 @@ void Player::Update() {
 	if (CheckForAttack() && m_gun != NULL) {
 		m_xClick = m_xMouse;
 		m_yClick = m_yMouse;
-		(*m_gun)->Shoot(m_xClick, m_yClick);
+		m_gun->Shoot(m_xClick, m_yClick);
 	}
 	if (m_ev->type == SDL_KEYDOWN) {
 		if (m_ev->key.keysym.sym == SDLK_r && m_gun != NULL)
-				(*m_gun)->Reload();
+				m_gun->Reload();
 		if (m_ev->key.keysym.sym == SDLK_q && m_gun != NULL) {
-			(*m_gun)->m_isPickedUp = false;
-			(*m_gun)->SetDestPos(Vec2(m_dest.x - m_dest.w, m_dest.y - m_dest.h));
-			(*m_gun)->SetScreenPos(Vec2(m_screen.x - m_screen.w, m_screen.y - m_screen.h));
+			m_gun->m_isPickedUp = false;
+			m_gun->SetDestPos(Vec2(m_dest.x - m_dest.w, m_dest.y - m_dest.h));
+			m_gun->SetScreenPos(Vec2(m_screen.x - m_screen.w, m_screen.y - m_screen.h));
 			m_gun = NULL;
 		}
 	}
 	if (m_gun != NULL)
-		(*m_gun)->Update();
+		m_gun->Update();
 	Move();
 	Render();
 }
@@ -116,6 +119,6 @@ void Player::Attack() {
 std::vector<Bullet*> Player::GetBullets() {
 	std::vector<Bullet*> bullets;
 	if (m_gun != NULL)
-		bullets = (*m_gun)->GetBullets();
+		bullets = m_gun->GetBullets();
 	return bullets;
 }
