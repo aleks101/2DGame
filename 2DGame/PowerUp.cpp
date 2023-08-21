@@ -36,10 +36,13 @@ SDL_Rect* PowerUp:: GetSrc() {
 	return &m_src; 
 }
 void PowerUp::Render() {
-	SDL_RenderCopy(m_ren, m_tex, nullptr, &m_screen);
+	if(!CheckIfObjectOutOfScreen())
+		SDL_RenderCopy(m_ren, m_tex, nullptr, &m_screen);
 }
 void PowerUp::Update() {
 	if (m_isAlive) {
+		if (coll::CheckCollisionAABB(GetDest(), m_player->GetDest()))
+			ActivateAbility();
 		Render();
 	}
 	else {

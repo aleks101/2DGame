@@ -27,8 +27,7 @@ void Map::Render() {
 	SDL_Rect* screen;
 	for (auto& tile : m_tiles) {
 		screen = tile.GetScreen();
-		if (!(screen->x + screen->w < 0 || screen->y + screen->h < 0 || screen->x > SCREEN_WIDTH || screen->y >SCREEN_HEIGHT))
-			tile.Update();
+		tile.Update();
 	}
 }
 void Map::AddLayer(SDL_Renderer* ren, std::string filePath, std::vector<TexID> textures, Vec2 startPos, int size, bool isSolid) {
@@ -72,21 +71,54 @@ void Map::MoveTilesTo(Vec2 newPos) {
 		tile.SetScreenPos(newPos);
 	}
 }
-bool Map::CheckCollisionDest(Object* entity) {
+bool Map::CheckCollisionDest(Object* object) {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
-			if (coll::CheckCollisionAABB(tile.GetDest(), entity->GetDest())) {
+			if (coll::CheckCollisionAABB(tile.GetDest(), object->GetDest())) {
 				return true;
 			}
 		}
 	}
 	return false;
 }
-bool Map::CheckCollisionScreen(Object* entity) {
+bool Map::CheckCollisionScreen(Object* object) {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
-			if (coll::CheckCollisionAABB(tile.GetScreen(), entity->GetScreen())) {
+			if (coll::CheckCollisionAABB(tile.GetScreen(), object->GetScreen())) {
 				return true;
+			}
+		}
+	}
+	return false;
+}
+bool Map::CheckCollision(Object* object, bool destOrScreen, bool XorY) {
+	//destOrScreen : true=dest, false=screen
+	//XorY : true=x, false=y
+	for (auto& tile : m_tiles) {
+		if (tile.m_isSolid) {
+			if (destOrScreen) {
+				if (coll::CheckCollisionAABB(tile.GetDest(), object->GetDest())) {
+					if (XorY) {
+						if (coll::CheckCollisionX(tile.GetDest(), object->GetDest()))
+							return true;
+					}
+					else {
+						if (coll::CheckCollisionY(tile.GetDest(), object->GetDest()))
+							return true;
+					}
+				}
+			}
+			else {
+				if (coll::CheckCollisionAABB(tile.GetScreen(), object->GetScreen())) {
+					if (XorY) {
+						if (coll::CheckCollisionX(tile.GetScreen(), object->GetScreen()))
+							return true;
+					}
+					else {
+						if (coll::CheckCollisionY(tile.GetScreen(), object->GetScreen()))
+							return true;
+					}
+				}
 			}
 		}
 	}

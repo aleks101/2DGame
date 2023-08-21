@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SDL.h>
-
 #include "Object.h"
 #include "Collision.h"
 #include "Vec2.h"
@@ -21,13 +19,18 @@ public:
 	Entity(SDL_Rect dest, float health);
 	Entity(SDL_Rect dest, float health, Entity* player, Map* map);
 	virtual ~Entity();
-	void AddHealth(float health);
-	void RemoveHealth(float damage);
-	float GetHealth()const;
-	bool IsAlive()const;
+	virtual void AddHealth(float health);
+	virtual void RemoveHealth(float damage);
+	virtual float GetHealth()const;
+	virtual bool IsAlive()const;
 	virtual void Move();
-	virtual bool CheckCollisionWithMap();
+	virtual bool CheckCollisionDestWithMap(Object* object);
+	virtual bool CheckCollisionScreenWithMap(Object* object);
+	virtual bool CheckCollisionDirectionWithMap(Object* object, bool destOrScreen, bool XorY);
+	void SetMap(Map* map);
+
 	virtual void Render() = 0;
 	virtual void Update() = 0;
+
 	Vec2 m_velocity;
 };

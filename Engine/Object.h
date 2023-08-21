@@ -76,6 +76,13 @@ public:
 	inline virtual Vec2 GetScreenPos() {
 		return Vec2(m_screen.x, m_screen.y);
 	}
+	inline virtual bool CheckIfObjectOutOfScreen() {
+		if (m_screen.x + m_screen.w < 0 || m_screen.x > SCREEN_WIDTH)
+			return true;
+		if (m_screen.y + m_screen.h < 0 || m_screen.y > SCREEN_HEIGHT)
+			return true;
+		return false;
+	}
 
 	bool m_isSolid;
 	SDL_Rect* m_playerRect;

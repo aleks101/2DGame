@@ -9,7 +9,8 @@ Tile::Tile(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, SDL_Rect* player,
 	SetSolid(isSolid);
 }
 void Tile::Render() {
-	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
+	if(!CheckIfObjectOutOfScreen())
+		SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
 }
 void Tile::Update() {
 	Render();

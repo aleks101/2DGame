@@ -11,7 +11,8 @@ Bullet::Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* 
 	Start();
 }
 void Bullet::Render() {
-	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
+	if (!CheckIfObjectOutOfScreen())
+		SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
 }
 void Bullet::Update() {
 	if (m_alive) {

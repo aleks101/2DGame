@@ -21,7 +21,8 @@ Shooter::~Shooter() {
 	LOG("SHOOTER DECONSTRUCTED\n");
 }
 void Shooter::Render() {
-	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
+	if (!CheckIfObjectOutOfScreen())
+		SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
 }
 void Shooter::Update() {
 	if (m_health <= 0)
@@ -44,10 +45,22 @@ void Shooter::Update() {
 				m_isSearchPointSet = true;
 			}
 		}
-		else if (IsPointInRadius(m_destination, destPos, 30) || Entity::CheckCollisionWithMap())
+		else if (IsPointInRadius(m_destination, destPos, 30)) {
 			m_isSearchPointSet = false;
+		}
 		else
 			m_velocity = physics::CalculateVelocity(destPos, m_destination, m_speed);
+		if (Entity::CheckCollisionDestWithMap(dynamic_cast<Object*>(this))) {
+			if (Entity::CheckCollisionDirectionWithMap(dynamic_cast<Object*>(this), true, true)) {
+				ChangeDestPosFor(Vec2(-m_velocity.x, 0));
+				ChangeScreenPosFor(Vec2(-m_velocity.x, 0));
+			}
+			else if (Entity::CheckCollisionDirectionWithMap(dynamic_cast<Object*>(this), true, false)) {
+				ChangeDestPosFor(Vec2(0, -m_velocity.y));
+				ChangeScreenPosFor(Vec2(0, -m_velocity.y));
+			}
+			m_isSearchPointSet = false;
+		}
 		Entity::Move();
 		for (int i = 0; i < m_magazine; i++) {
 			if (m_bullets[i] != NULL) {
@@ -55,6 +68,10 @@ void Shooter::Update() {
 				m_bullets[i]->UpdatePositionRelativeToPlayer();
 				if (coll::CheckCollisionAABB(m_player->GetScreen(), m_bullets[i]->GetScreen())) {
 					m_player->RemoveHealth(m_bulletDamage);
+					delete m_bullets[i];
+					m_bullets[i] = NULL;
+				}
+				if (Entity::CheckCollisionScreenWithMap(dynamic_cast<Object*>(m_bullets[i]))) {
 					delete m_bullets[i];
 					m_bullets[i] = NULL;
 				}

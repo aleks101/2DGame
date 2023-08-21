@@ -22,5 +22,6 @@ void Ammo::Update() {
 	}
 }
 void Ammo::Render() {
-	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
+	if (!CheckIfObjectOutOfScreen())
+		SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
 }

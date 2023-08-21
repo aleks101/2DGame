@@ -11,7 +11,7 @@ Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest
 	m_gun = NULL;
 }
 Player::~Player() {
-
+	LOG("PLAYER DECONSTRUCTED\n");
 }
 void Player::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
@@ -36,8 +36,14 @@ void Player::Update() {
 			m_gun = NULL;
 		}
 	}
-	if (m_gun != NULL)
+	if (m_gun != NULL) {
+		for (int j = 0; j < GetBullets().size(); j++) {
+			if (Entity::CheckCollisionScreenWithMap(dynamic_cast<Object*>(GetBullets()[j]))) {
+				GetBullets()[j]->Destroy();
+			}
+		}
 		m_gun->Update();
+	}
 	Move();
 	Render();
 }

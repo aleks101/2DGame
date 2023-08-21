@@ -72,9 +72,6 @@
     <ClInclude Include="Log.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -114,9 +111,6 @@
       <Filter>App</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>

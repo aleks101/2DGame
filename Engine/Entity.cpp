@@ -30,9 +30,25 @@ void Entity::Move() {
 	ChangeDestPosFor(m_velocity);
 	ChangeScreenPosFor(m_velocity);
 }
-bool Entity::CheckCollisionWithMap() {
-	if (m_map != NULL) 
-		if (m_map->CheckCollisionDest(dynamic_cast<Object*>(this)))
+bool Entity::CheckCollisionDestWithMap(Object* object) {
+	if (m_map != NULL && object!=NULL) 
+		if (m_map->CheckCollisionDest(object))
 			return true;
 	return false;
+}
+bool Entity::CheckCollisionScreenWithMap(Object* object) {
+	if (m_map != NULL && object != NULL)
+		if (m_map->CheckCollisionScreen(object))
+			return true;
+	return false;
+}
+bool Entity::CheckCollisionDirectionWithMap(Object* object, bool destOrScreen, bool XorY) {
+	if (m_map != NULL && object!=NULL) {
+		if (m_map->CheckCollision(object, destOrScreen, XorY))
+			return true;
+	}
+	return false;
+}
+void Entity::SetMap(Map* map) {
+	m_map = map;
 }

@@ -16,7 +16,8 @@ Follower::~Follower() {
 	LOG("FOLLOWER DESTROYED\n");
 }
 void Follower::Render() {
-	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
+	if (!CheckIfObjectOutOfScreen())
+		SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
 }
 void Follower::Update() {
 	if (m_health <= 0)
@@ -41,12 +42,23 @@ void Follower::Update() {
 				m_isSearchPointSet = true;
 			}
 		}
-		else if (IsPointInRadius(m_destination, destPos, 30) || Entity::CheckCollisionWithMap()) {
+		else if (IsPointInRadius(m_destination, destPos, 30)) {
 			LOG("SEARCH POINT REACHED\n");
 			m_isSearchPointSet = false;
 		}
 		else {
 			m_velocity = physics::CalculateVelocity(destPos, m_destination, m_searchSpeed);
+		}
+		if (Entity::CheckCollisionDestWithMap(dynamic_cast<Object*>(this))) {
+			if (Entity::CheckCollisionDirectionWithMap(dynamic_cast<Object*>(this), true, true)) {
+				ChangeDestPosFor(Vec2(-m_velocity.x, 0));
+				ChangeScreenPosFor(Vec2(-m_velocity.x, 0));
+			}
+			else if (Entity::CheckCollisionDirectionWithMap(dynamic_cast<Object*>(this), true, false)) {
+				ChangeDestPosFor(Vec2(0, -m_velocity.y));
+				ChangeScreenPosFor(Vec2(0, -m_velocity.y));
+			}
+			m_isSearchPointSet = false;
 		}
 		Entity::Move();
 		Render();

@@ -61,8 +61,10 @@ void Game::Setup() {
 	map = new Map(player);
 	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
 
-	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 100, 3.7f, 1.7f, 5, 500, 300));
-	entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 90, 500));
+	player->Entity::SetMap(map);
+
+	//entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 100, 3.7f, 1.7f, 5, 500, 300));
+	entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 0, 500));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player, Ability(500,100,5,5)));
 
 	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
@@ -100,19 +102,17 @@ void Game::MainLoop() {
 			for (auto& object : fixedObjects) {
 				object->Update();
 				object->UpdatePositionRelativeToPlayer();
-				for (int j = 0; j < player->GetBullets().size(); j++) {
-					if (coll::CheckCollisionAABB(object->GetScreen(), player->GetBullets()[j]->GetScreen())) {
-						player->GetBullets()[j]->Destroy();
-					}
-				}
+				//for (int j = 0; j < player->GetBullets().size(); j++) {
+				//	if (coll::CheckCollisionAABB(object->GetScreen(), player->GetBullets()[j]->GetScreen())) {
+				//		player->GetBullets()[j]->Destroy();
+				//	}
+				//}
 			}
 			//update powerups
 			for (auto& powerUp : powerUps) {
 				if (powerUp != NULL) {
 					powerUp->Update();
 					powerUp->UpdatePositionRelativeToPlayer();
-					if (coll::CheckCollisionAABB(powerUp->GetDest(), player->GetDest()))
-						powerUp->ActivateAbility();
 					if (powerUp->m_canBeDestroyed) {
 						delete powerUp;
 						powerUp = NULL;
@@ -121,7 +121,7 @@ void Game::MainLoop() {
 			}
 			//update entities
 			for (auto& entity : entities) {
-				if(entity!=NULL){
+				if(entity!=NULL) {
 					if (entity->GetHealth() <= 0) {
 						delete entity;
 						entity = NULL;
