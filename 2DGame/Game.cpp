@@ -9,6 +9,7 @@ Game::~Game() {
 	delete map;
 	delete playerHealth;
 	delete ammoText;
+	delete score;
 	for (int i = 0; i < fixedObjects.size(); i++)
 		if (fixedObjects[i] != NULL) {
 			delete fixedObjects[i];
@@ -63,19 +64,22 @@ void Game::Setup() {
 
 	player->Entity::SetMap(map);
 
-	//entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 100, 3.7f, 1.7f, 5, 500, 300));
-	entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 0, 500));
+	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 30, 100, 3.7f, 1.7f, 5, 500, 300));
+	entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 10.5f, 500, 60));
 	powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player, Ability(500,100,5,5)));
 
-	playerHealth = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
+	score = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "score", { 255, 255, 255, 255 });
+	score->SetNoChangeText("Score: ");
+
+	playerHealth = new Text(m_ren, Vec2(0, 20), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
 	playerHealth->SetNoChangeText("Health: ");
 
-	ammoText = new Text(m_ren, Vec2(0, 20), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "ammo", { 255, 255, 255, 255 });
+	ammoText = new Text(m_ren, Vec2(0, 40), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "ammo", { 255, 255, 255, 255 });
 
 	rifle = new Weapon<15>(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), &ev, { 500, 500, 25, 25 }, player->GetDest(), player->GetScreen(), 75, true, 7.5f, 20, 12, 6);
 	rifle->AddAmmo(75);
 
-	ammo = new Ammo(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50);
+	ammo = new Collectable(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50, 100, 0);
 
 	MainLoop();
 }
@@ -102,11 +106,6 @@ void Game::MainLoop() {
 			for (auto& object : fixedObjects) {
 				object->Update();
 				object->UpdatePositionRelativeToPlayer();
-				//for (int j = 0; j < player->GetBullets().size(); j++) {
-				//	if (coll::CheckCollisionAABB(object->GetScreen(), player->GetBullets()[j]->GetScreen())) {
-				//		player->GetBullets()[j]->Destroy();
-				//	}
-				//}
 			}
 			//update powerups
 			for (auto& powerUp : powerUps) {
@@ -123,6 +122,7 @@ void Game::MainLoop() {
 			for (auto& entity : entities) {
 				if(entity!=NULL) {
 					if (entity->GetHealth() <= 0) {
+						player->AddScore(entity->m_score);
 						delete entity;
 						entity = NULL;
 					}
@@ -166,6 +166,8 @@ void Game::MainLoop() {
 			}
 			playerHealth->Update();
 			playerHealth->ChangeText(player->GetHealth());
+			score->Update();
+			score->ChangeText(player->GetScore());
 
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);

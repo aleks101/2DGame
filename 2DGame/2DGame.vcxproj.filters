@@ -45,7 +45,7 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Ammo.cpp">
+    <ClCompile Include="Collectable.cpp">
       <Filter>Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Shooter.cpp">
@@ -71,7 +71,7 @@
     <ClInclude Include="Bullet.h">
       <Filter>Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="Ammo.h">
+    <ClInclude Include="Collectable.h">
       <Filter>Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Shooter.h">

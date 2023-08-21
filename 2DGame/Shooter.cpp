@@ -1,7 +1,7 @@
 #include "Shooter.h"
 
-Shooter::Shooter(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, const int magazine, float searchAreaRadius, float searchPlayerRadius, Uint32 shootDelay, float speed, float bulletSpeed, float bulletDamage, float health) :
-	Entity(dest, health, player, map), m_searchAreaRadius(searchAreaRadius), m_searchPlayerRadius(searchPlayerRadius), m_shootDelay(shootDelay), m_speed(speed), m_bulletSpeed(bulletSpeed), m_bulletDamage(bulletDamage), m_magazine(magazine) {
+Shooter::Shooter(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, const int magazine, float searchAreaRadius, float searchPlayerRadius, Uint32 shootDelay, float speed, float bulletSpeed, float bulletDamage, float health, float score) :
+	Entity(dest, health, score, player, map), m_searchAreaRadius(searchAreaRadius), m_searchPlayerRadius(searchPlayerRadius), m_shootDelay(shootDelay), m_speed(speed), m_bulletSpeed(bulletSpeed), m_bulletDamage(bulletDamage), m_magazine(magazine) {
 	m_bullets = new Bullet*[magazine];
 	for (int i = 0; i < magazine; i++)
 		m_bullets[i] = NULL;

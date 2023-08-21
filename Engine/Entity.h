@@ -17,7 +17,7 @@ protected:
 	Entity* m_player;
 public:
 	Entity(SDL_Rect dest, float health);
-	Entity(SDL_Rect dest, float health, Entity* player, Map* map);
+	Entity(SDL_Rect dest, float health, float score, Entity* player, Map* map);
 	virtual ~Entity();
 	virtual void AddHealth(float health);
 	virtual void RemoveHealth(float damage);
@@ -33,4 +33,5 @@ public:
 	virtual void Update() = 0;
 
 	Vec2 m_velocity;
+	float m_score;
 };

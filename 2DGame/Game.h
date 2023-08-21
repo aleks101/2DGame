@@ -14,7 +14,7 @@
 #include "Follower.h"
 #include "Shooter.h"
 #include "Weapon.h"
-#include "Ammo.h"
+#include "Collectable.h"
 
 class Game
 {
@@ -22,12 +22,14 @@ private:
 	SDL_Event ev;
 	SDL_Renderer* m_ren;
 
+	Text* score;
+
 	Player* player;
 	Map* map;
 	Text* playerHealth;
 	Text* ammoText;
 	Weapon<15>* rifle;
-	Ammo* ammo;
+	Collectable* ammo;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;

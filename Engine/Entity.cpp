@@ -5,8 +5,8 @@ Entity::Entity(SDL_Rect dest, float health)
 	: Object(dest), m_health(health), m_isAlive(true), m_velocity(Vec2(0,0)), m_player(nullptr), m_map(nullptr) {
 	LOG("ENTITY CONSTRUCTED\n");
 }
-Entity::Entity(SDL_Rect dest, float health, Entity* player, Map* map) 
-	: m_player(player), m_health(health), m_isAlive(true), m_map(map), m_velocity(Vec2(0,0)), Object(dest, player->GetDest()) {
+Entity::Entity(SDL_Rect dest, float health, float score, Entity* player, Map* map) 
+	: m_player(player), m_health(health), m_score(score), m_isAlive(true), m_map(map), m_velocity(Vec2(0, 0)), Object(dest, player->GetDest()) {
 	LOG("ENTITY CONSTRUCTED\n");
 }
 Entity::~Entity() {

@@ -1,7 +1,7 @@
 #include "Follower.h"
 
-Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, float health, float attackSpeed, float searchSpeed, float damage, int radius, int playerRadius) :
-	Entity(dest, health, player, map), m_attackSpeed(attackSpeed), m_searchSpeed(searchSpeed), m_damage(damage),
+Follower::Follower(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, float score, float health, float attackSpeed, float searchSpeed, float damage, int radius, int playerRadius) :
+	Entity(dest, health, score, player, map), m_attackSpeed(attackSpeed), m_searchSpeed(searchSpeed), m_damage(damage),
 	m_wonderRadius(radius), m_searchPlayerRadius(playerRadius) {
 	m_ren = ren;
 	m_tex = tex;

@@ -19,7 +19,7 @@ private:
 	bool m_isSearchPointSet;
 	Vec2 m_destination;
 public:
-	Shooter(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, const int magazine, float searchAreaRadius, float searchPlayerRadius, Uint32 shootDelay, float speed, float bulletSpeet, float bulletDamage, float health);
+	Shooter(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, const int magazine, float searchAreaRadius, float searchPlayerRadius, Uint32 shootDelay, float speed, float bulletSpeet, float bulletDamage, float health, float score);
 	~Shooter();
 	SDL_Rect* GetDest() { return &m_dest; }
 	SDL_Rect* GetSrc() { return &m_src; }
