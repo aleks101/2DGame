@@ -8,6 +8,7 @@
 #include "Text.h"
 #include "Light.h"
 #include "Log.h"
+#include "FileManager.h"
 
 #include "Player.h"
 #include "PowerUp.h"
@@ -30,6 +31,8 @@ private:
 	Text* ammoText;
 	Weapon<15>* rifle;
 	Collectable* ammo;
+
+	FileManager* highScore;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;

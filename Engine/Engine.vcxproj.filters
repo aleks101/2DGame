@@ -72,6 +72,7 @@
     <ClInclude Include="Log.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="FileManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -113,5 +114,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="FileManager.cpp" />
   </ItemGroup>
 </Project>

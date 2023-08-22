@@ -13,7 +13,6 @@ private:
 	int m_xClick, m_yClick;
 	int m_attackRange;
 	const float m_speed = 5;
-	float m_score;
 
 	SDL_Event* m_ev;
 	Light m_light;
@@ -35,6 +34,6 @@ public:
 	void Attack();
 
 	void AddScore(float score);
-	float GetScore() const;
+	float m_score;
 };
 

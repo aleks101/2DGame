@@ -5,6 +5,9 @@ Game::Game() {
 	m_ren = App::renderer;
 }
 Game::~Game() {
+	highScore->WriteBinary(&player->m_score, sizeof(player->m_score));
+	delete highScore;
+
 	delete player;
 	delete map;
 	delete playerHealth;
@@ -80,6 +83,8 @@ void Game::Setup() {
 	rifle->AddAmmo(75);
 
 	ammo = new Collectable(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50, 100, 0);
+
+	highScore = new FileManager("Files/Save/highscore.bin");
 
 	MainLoop();
 }
@@ -167,7 +172,7 @@ void Game::MainLoop() {
 			playerHealth->Update();
 			playerHealth->ChangeText(player->GetHealth());
 			score->Update();
-			score->ChangeText(player->GetScore());
+			score->ChangeText((int)(player->m_score));
 
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);

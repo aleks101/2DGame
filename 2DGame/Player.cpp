@@ -131,6 +131,3 @@ std::vector<Bullet*> Player::GetBullets() {
 void Player::AddScore(float score) {
 	m_score += score;
 }
-float Player::GetScore()const {
-	return m_score;
-}
