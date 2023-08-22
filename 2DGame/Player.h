@@ -19,6 +19,7 @@ private:
 public:
 	Weapon<15>* m_gun;
 public:
+	Player() : Entity({0,0,0,0}, 1) {}
 	Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest, float health);
 	~Player();
 	void Update();

@@ -30,3 +30,31 @@ void FileManager::Clear(bool isBinary) {
 
     file.close();
 }
+std::string FileManager::Read() {
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        LOG("Error opening file: " + filePath);
+        return "ERROR";
+    }
+    std::string line, all="";
+    while (std::getline(file, line)) {
+        all += line;
+    }
+    file.close();
+    return all;
+}
+std::string FileManager::Read(int lineID) {
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        LOG("Error opening file: " + filePath);
+        return "ERROR";
+    }
+    file.seekg(lineID, std::ios::beg);
+    std::string line;
+    std::getline(file, line);
+    file.close();
+    return line;
+}
+void FileManager::ChangeFile(std::string newPath) {
+    filePath = newPath;
+}
