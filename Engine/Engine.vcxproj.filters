@@ -75,6 +75,7 @@
     <ClInclude Include="FileManager.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -119,5 +120,6 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp" />
   </ItemGroup>
 </Project>

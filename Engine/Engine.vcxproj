@@ -23,6 +23,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Array.h" />
     <ClInclude Include="Assets.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Entity.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Assets.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Entity.cpp" />

@@ -20,6 +20,11 @@ Game::~Game() {
 	delete playerHealth;
 	delete ammoText;
 	delete score;
+	delete pauseText1;
+	delete resumeButton;
+	if (ammo != NULL)
+		delete ammo;
+	
 	for (int i = 0; i < fixedObjects.size(); i++)
 		if (fixedObjects[i] != NULL) {
 			delete fixedObjects[i];
@@ -41,6 +46,8 @@ Game::~Game() {
 	if (rifle != NULL)
 		delete rifle;
 
+	SDL_DestroyTexture(sceneTexture);
+
 	Assets::CleanTextures();
 	Assets::CleanFonts();
 	Assets::CleanMusic();
@@ -52,13 +59,14 @@ void Game::Setup() {
 	srand(time(0));
 
 	isRunning = true;
+
+	highScore = new FileManager("Files/Save/highscore.bin");
 	//dodaj texture
 	Assets::AddTexture(m_ren, "Files/Images/blue.png", IMG_INIT_PNG);
 	Assets::AddTexture(m_ren, "Files/Images/red.png", IMG_INIT_PNG);
 	Assets::AddTexture(m_ren, "Files/Images/player.jpg", IMG_INIT_JPG);
 	Assets::AddTexture(m_ren, "Files/Images/tile.jpg", IMG_INIT_JPG);
 	Assets::AddTexture(m_ren, "Files/Images/Rifle.jpg", IMG_INIT_JPG);
-
 	Assets::AddFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf", 22);
 
 	sceneTexture = SDL_CreateTexture(m_ren, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
@@ -71,8 +79,11 @@ void Game::Setup() {
 
 	map = new Map(player);
 	map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
-
 	player->Entity::SetMap(map);
+
+	rifle = new Weapon<15>(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), &ev, { 500, 500, 25, 25 }, player->GetDest(), player->GetScreen(), 75, true, 7.5f, 20, 12, 6);
+	rifle->AddAmmo(75);
+	ammo = new Collectable(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50, 100, 0);
 
 	entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 30, 100, 3.7f, 1.7f, 5, 500, 300));
 	entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 10.5f, 500, 60));
@@ -80,18 +91,15 @@ void Game::Setup() {
 
 	score = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "score", { 255, 255, 255, 255 });
 	score->SetNoChangeText("Score: ");
-
 	playerHealth = new Text(m_ren, Vec2(0, 20), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
 	playerHealth->SetNoChangeText("Health: ");
-
 	ammoText = new Text(m_ren, Vec2(0, 40), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "ammo", { 255, 255, 255, 255 });
 
-	rifle = new Weapon<15>(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), &ev, { 500, 500, 25, 25 }, player->GetDest(), player->GetScreen(), 75, true, 7.5f, 20, 12, 6);
-	rifle->AddAmmo(75);
+	pauseText1 = new Text(m_ren, Vec2(500, 150), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "Game is paused", { 255, 255, 255, 255 });
+	resumeButton = new Button(m_ren, &ev, Vec2(100, 350), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "RESUME PLAYING", { 255, 255, 255, 255 });
 
-	ammo = new Collectable(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50, 100, 0);
-
-	highScore = new FileManager("Files/Save/highscore.bin");
+	isStartUp = false;
+	isPaused = false;
 
 	MainLoop();
 }
@@ -109,77 +117,18 @@ void Game::MainLoop() {
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 0);
 			SDL_RenderClear(m_ren);
 
-			map->Update();
-			for (int i = 0; i < player->GetBullets().size(); i++) {
-				if(map->CheckCollisionScreen(player->GetBullets()[i]))
-					player->GetBullets()[i]->Destroy();
+			if (isStartUp)
+				StartupLoop();
+			else {
+				if (ev.type == SDL_KEYDOWN)
+					if (ev.key.keysym.sym == SDLK_ESCAPE)
+						isPaused = !isPaused;
+				if(isPaused)
+					PauseLoop();
+				else
+					GameLoop();
 			}
-			//update fixed objects
-			for (auto& object : fixedObjects) {
-				object->Update();
-				object->UpdatePositionRelativeToPlayer();
-			}
-			//update powerups
-			for (auto& powerUp : powerUps) {
-				if (powerUp != NULL) {
-					powerUp->Update();
-					powerUp->UpdatePositionRelativeToPlayer();
-					if (powerUp->m_canBeDestroyed) {
-						delete powerUp;
-						powerUp = NULL;
-					}
-				}
-			}
-			//update entities
-			for (auto& entity : entities) {
-				if(entity!=NULL) {
-					if (entity->GetHealth() <= 0) {
-						player->AddScore(entity->m_score);
-						delete entity;
-						entity = NULL;
-					}
-					else {
-						entity->Update();
-						entity->UpdatePositionRelativeToPlayer();
-						for (int j = 0; j < player->GetBullets().size(); j++) {
-							if (coll::CheckCollisionAABB(entity->GetScreen(), player->GetBullets()[j]->GetScreen())) {
-								entity->RemoveHealth(player->GetBullets()[j]->m_damage);
-								player->GetBullets()[j]->Destroy();
-							}
-						}
-					}
-				}
-			}
-			if (rifle != NULL) {
-				rifle->Update();
-				rifle->UpdatePositionRelativeToPlayer();
-				if (coll::CheckCollisionAABB(player->GetDest(), rifle->GetDest())) {
-					player->m_gun = rifle;
-					rifle->m_isPickedUp = true;
-				}
-			}
-			if (ammo != NULL) {
-				ammo->Update();
-				ammo->UpdatePositionRelativeToPlayer();
-				if (!ammo->m_isAlive) {
-					delete ammo;
-					ammo = NULL;
-				}
-			}
-
-			//update player
-			player->Update();
-			if (!player->IsAlive())
-				isRunning = false;
-			//update text
-			if (rifle!=NULL && rifle->m_isPickedUp) {
-				ammoText->Update();
-				ammoText->ChangeText(player->m_gun->GetAmmo());
-			}
-			playerHealth->Update();
-			playerHealth->ChangeText(player->GetHealth());
-			score->Update();
-			score->ChangeText((int)(player->m_score));
+			
 
 			SDL_SetRenderTarget(m_ren, NULL);
 			SDL_RenderClear(m_ren);
@@ -189,4 +138,86 @@ void Game::MainLoop() {
 			App::ApplicationRender();
 		}
 	}
+}
+void Game::GameLoop() {
+	map->Update();
+	for (int i = 0; i < player->GetBullets().size(); i++) {
+		if (map->CheckCollisionScreen(player->GetBullets()[i]))
+			player->GetBullets()[i]->Destroy();
+	}
+	//update fixed objects
+	for (auto& object : fixedObjects) {
+		object->Update();
+		object->UpdatePositionRelativeToPlayer();
+	}
+	//update powerups
+	for (auto& powerUp : powerUps) {
+		if (powerUp != NULL) {
+			powerUp->Update();
+			powerUp->UpdatePositionRelativeToPlayer();
+			if (powerUp->m_canBeDestroyed) {
+				delete powerUp;
+				powerUp = NULL;
+			}
+		}
+	}
+	//update entities
+	for (auto& entity : entities) {
+		if (entity != NULL) {
+			if (entity->GetHealth() <= 0) {
+				player->AddScore(entity->m_score);
+				delete entity;
+				entity = NULL;
+			}
+			else {
+				entity->Update();
+				entity->UpdatePositionRelativeToPlayer();
+				for (int j = 0; j < player->GetBullets().size(); j++) {
+					if (coll::CheckCollisionAABB(entity->GetScreen(), player->GetBullets()[j]->GetScreen())) {
+						entity->RemoveHealth(player->GetBullets()[j]->m_damage);
+						player->GetBullets()[j]->Destroy();
+					}
+				}
+			}
+		}
+	}
+	if (rifle != NULL) {
+		rifle->Update();
+		rifle->UpdatePositionRelativeToPlayer();
+		if (coll::CheckCollisionAABB(player->GetDest(), rifle->GetDest())) {
+			player->m_gun = rifle;
+			rifle->m_isPickedUp = true;
+		}
+	}
+	if (ammo != NULL) {
+		ammo->Update();
+		ammo->UpdatePositionRelativeToPlayer();
+		if (!ammo->m_isAlive) {
+			delete ammo;
+			ammo = NULL;
+		}
+	}
+
+	//update player
+	player->Update();
+	if (!player->IsAlive())
+		isRunning = false;
+	//update text
+	if (rifle != NULL && rifle->m_isPickedUp) {
+		ammoText->Update();
+		ammoText->ChangeText(player->m_gun->GetAmmo());
+	}
+	playerHealth->Update();
+	playerHealth->ChangeText(player->GetHealth());
+	score->Update();
+	score->ChangeText((int)(player->m_score));
+}
+void Game::StartupLoop() {
+
+}
+void Game::PauseLoop() {
+	pauseText1->Update();
+	resumeButton->Update();
+	if (resumeButton->CheckMouseClick())
+		isPaused = false;
 }

@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "Log.h"
 #include "FileManager.h"
+#include "Button.h"
 
 #include "Player.h"
 #include "PowerUp.h"
@@ -40,6 +41,11 @@ private:
 
 	SDL_Texture* sceneTexture;
 
+	Text* pauseText1;
+	Button* resumeButton;
+
+	bool isStartUp;
+	bool isPaused;
 	bool isRunning;
 public:
 	Game();
@@ -47,6 +53,11 @@ public:
 	void Setup();
 	void Quit();
 	void MainLoop();
+
+	void GameLoop();
+	void StartupLoop();
+	void PauseLoop();
+
 	template<typename T>
 	void DeleteElement(std::vector<T> container, int index) {
 		delete container[index];

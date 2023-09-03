@@ -56,4 +56,15 @@ namespace coll {
         return false;
                  
     }
+    bool CheckCollisionPoint(const SDL_Rect* const A, const Vec2 B) {
+        int leftA = A->x;
+        int rightA = A->x + A->w;
+        int topA = A->y;
+        int bottomA = A->y + A->h;
+
+        if (B.x >= leftA && B.x <= rightA && B.y >= topA && B.y <= bottomA) {
+            return true;
+        }
+        return false;
+    }
 }
