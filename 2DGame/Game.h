@@ -23,30 +23,42 @@ class Game
 private:
 	SDL_Event ev;
 	SDL_Renderer* m_ren;
+	SDL_Texture* sceneTexture;
 
-	Text* score;
+	bool isInit;
+	bool isStartUp;
+	bool isPaused;
+	bool isRunning;
+
+	int level;
+	int numOfEasyEnemies;
+	int numOfNormalEnemies;
+	int numOfHardEnemies;
+	int numOfBosses;
+	unsigned int timeoutTime;
+	std::string playerNamestring;
 
 	Player* player;
 	Map* map;
-	Text* playerHealth;
-	Text* ammoText;
 	Weapon<15>* rifle;
 	Collectable* ammo;
-
 	FileManager* highScore;
 
 	std::vector<Object*> fixedObjects;
 	std::vector<PowerUp*> powerUps;
 	std::vector<Entity*> entities;
 
-	SDL_Texture* sceneTexture;
-
+	Text* playerName;
+	Text* playerHealth;
+	Text* ammoText;
+	Text* levelText;
 	Text* pauseText1;
-	Button* resumeButton;
+	Text* score;
+	Text* enterName;
 
-	bool isStartUp;
-	bool isPaused;
-	bool isRunning;
+	Button* resumeButton;
+	Button* quitButton;
+	Button* exitButton;
 public:
 	Game();
 	~Game();
@@ -57,6 +69,7 @@ public:
 	void GameLoop();
 	void StartupLoop();
 	void PauseLoop();
+	void Clean();
 
 	template<typename T>
 	void DeleteElement(std::vector<T> container, int index) {

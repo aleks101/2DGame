@@ -11,10 +11,10 @@
 class Text : public Object
 {
 private:
-	std::string permaText;
-	std::string text;
-	SDL_Color color;
-	TTF_Font* font;
+	std::string m_permaText;
+	std::string m_text;
+	SDL_Color m_color;
+	TTF_Font* m_font;
 public:
 	Text();
 	Text(SDL_Renderer* ren, Vec2 pos, TTF_Font* _font, std::string _text, SDL_Color _color);
@@ -30,5 +30,6 @@ public:
 	void SetNoChangeText(std::string newText);
 	void ChangeText(std::string _text);
 	void ChangeText(int num);
+	void ChangeColor(SDL_Color color);
 };
 
