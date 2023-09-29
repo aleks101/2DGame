@@ -75,7 +75,12 @@
     <ClInclude Include="FileManager.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="Button.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Calculations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -120,6 +125,8 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Button.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,12 +9,11 @@ class Map;
 
 class Entity : public Object
 {
-private:
-	Map* m_map;
 protected:
 	float m_health;
 	bool m_isAlive;
 	Entity* m_player;
+	Map* m_map;
 public:
 	Entity(SDL_Rect dest, float health);
 	Entity(SDL_Rect dest, float health, float score, Entity* player, Map* map);

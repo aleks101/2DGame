@@ -39,7 +39,7 @@ Text::Text() : Object({0,0,0,0}) {
 
 }
 Text::~Text() {
-
+	SDL_DestroyTexture(m_tex);
 }
 void Text::Render() {
 	SDL_RenderCopy(m_ren, m_tex, NULL, &m_dest);

@@ -1,7 +1,7 @@
 #include "Shooter.h"
 
 Shooter::Shooter(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* player, Map* map, const int magazine, float searchAreaRadius, float searchPlayerRadius, Uint32 shootDelay, float speed, float bulletSpeed, float bulletDamage, float health, float score) :
-	Entity(dest, health, score, player, map), m_searchAreaRadius(searchAreaRadius), m_searchPlayerRadius(searchPlayerRadius), m_shootDelay(shootDelay), m_speed(speed), m_bulletSpeed(bulletSpeed), m_bulletDamage(bulletDamage), m_magazine(magazine) {
+	Entity(dest, health, score, player, map), m_searchAreaRadius(searchAreaRadius), m_searchPlayerRadius(searchPlayerRadius), m_shootDelay(shootDelay), m_speed(speed), m_bulletSpeed(bulletSpeed), m_bulletDamage(bulletDamage), m_magazine(magazine), m_timer() {
 	m_bullets = new Bullet*[magazine];
 	for (int i = 0; i < magazine; i++)
 		m_bullets[i] = NULL;
@@ -11,7 +11,7 @@ Shooter::Shooter(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* pla
 	m_isSearchPointSet = false;
 	m_destination = Vec2();
 	m_velocity = Vec2();
-	Start();
+	m_timer.Start();
 	LOG("SHOOTER CONSTRUCTED\n");
 }
 Shooter::~Shooter() {
@@ -66,7 +66,7 @@ void Shooter::Update() {
 			if (m_bullets[i] != NULL) {
 				m_bullets[i]->Update();
 				m_bullets[i]->UpdatePositionRelativeToPlayer();
-				if (coll::CheckCollisionAABB(m_player->GetScreen(), m_bullets[i]->GetScreen())) {
+				if (coll::CheckCollisionAABB(*m_player->GetScreen(), *m_bullets[i]->GetScreen())) {
 					m_player->RemoveHealth(m_bulletDamage);
 					delete m_bullets[i];
 					m_bullets[i] = NULL;
@@ -81,15 +81,15 @@ void Shooter::Update() {
 	}
 }
 void Shooter::Attack() {
-	if (m_currMagPos < m_magazine && GetMili() > m_shootDelay) {
-		Start();
+	if (m_currMagPos < m_magazine && m_timer.GetMili() > m_shootDelay) {
+		m_timer.Start();
 		Vec2 point = m_player->GetScreenPos();
 		point.x += m_playerRect->w / 2;
 		point.y += m_playerRect->h / 2;
 		m_bullets[m_currMagPos] = new Bullet(m_ren, m_tex, { m_dest.x, m_dest.y, m_dest.w / 2, m_dest.h / 2 }, m_playerRect, GetScreenPos(), point, m_bulletSpeed, m_bulletDamage, 0, 5);
 		m_currMagPos++;
 	}
-	else if(m_currMagPos >= m_magazine && GetMili() > 2500)
+	else if(m_currMagPos >= m_magazine && m_timer.GetMili() > 2500)
 		m_currMagPos = 0;
 }
 bool Shooter::IsPointInRadius(Vec2 centerPoint, Vec2 randomPoint, float radius) {

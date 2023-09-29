@@ -29,6 +29,8 @@ public:
 	void MoveTilesTo(Vec2 newPos);
 
 	bool CheckCollisionDest(Object* object);
+	bool CheckCollisionDest(SDL_Rect* dest);
+	bool CheckCollisionDest(Vec2 point);
 	bool CheckCollisionScreen(Object* object);
 	bool CheckCollision(Object* object, bool destOrScreen, bool XorY);
 };

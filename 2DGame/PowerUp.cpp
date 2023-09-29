@@ -41,7 +41,7 @@ void PowerUp::Render() {
 }
 void PowerUp::Update() {
 	if (m_isAlive) {
-		if (coll::CheckCollisionAABB(GetDest(), m_player->GetDest()))
+		if (coll::CheckCollisionAABB(*GetDest(), *m_player->GetDest()))
 			ActivateAbility();
 		Render();
 	}

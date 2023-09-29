@@ -52,10 +52,11 @@ void Game::Setup() {
 	MainLoop();
 }
 void Game::Clean() {
-	delete player;
-	delete map;
-	if (ammo != NULL)
-		delete ammo;
+	delete player; player = NULL;
+	delete map; map = NULL;
+	if (ammo != NULL) {
+		delete ammo; ammo = NULL;
+	}
 
 	for (int i = 0; i < fixedObjects.size(); i++)
 		if (fixedObjects[i] != NULL) {
@@ -75,18 +76,19 @@ void Game::Clean() {
 			entities[i] = NULL;
 		}
 	LOG("entities deleted\n");
-	if (rifle != NULL)
-		delete rifle;
-	delete playerName;
-	delete playerHealth;
-	delete ammoText;
-	delete levelText;
-	delete pauseText1;
-	delete score;
-	//delete enterName;
-	delete resumeButton;
-	delete quitButton;
-	//delete exitButton;
+	if (rifle != NULL) {
+		delete rifle; rifle = NULL;
+	}
+	delete playerName; playerName = NULL;
+	delete playerHealth; playerHealth = NULL;
+	delete ammoText; ammoText = NULL;
+	delete levelText; levelText = NULL;
+	delete pauseText1; pauseText1 = NULL;
+	delete score; score = NULL;
+	//delete enterName; enterName = NULL;
+	delete resumeButton; resumeButton = NULL;
+	delete quitButton; quitButton = NULL;
+	//delete exitButton; exitButton=NULL;
 }
 void Game::Quit() {
 	isRunning = false;
@@ -157,7 +159,7 @@ void Game::GameLoop() {
 				entity->Update();
 				entity->UpdatePositionRelativeToPlayer();
 				for (int j = 0; j < player->GetBullets().size(); j++) {
-					if (coll::CheckCollisionAABB(entity->GetScreen(), player->GetBullets()[j]->GetScreen())) {
+					if (coll::CheckCollisionAABB(*entity->GetScreen(), *player->GetBullets()[j]->GetScreen())) {
 						entity->RemoveHealth(player->GetBullets()[j]->m_damage);
 						player->GetBullets()[j]->Destroy();
 					}
@@ -168,7 +170,7 @@ void Game::GameLoop() {
 	if (rifle != NULL) {
 		rifle->Update();
 		rifle->UpdatePositionRelativeToPlayer();
-		if (coll::CheckCollisionAABB(player->GetDest(), rifle->GetDest())) {
+		if (coll::CheckCollisionAABB(*player->GetDest(), *rifle->GetDest())) {
 			player->m_gun = rifle;
 			rifle->m_isPickedUp = true;
 		}
@@ -214,6 +216,7 @@ void Game::PauseLoop() {
 		isPaused = false;
 	if (quitButton->CheckMouseClick()) {
 		isStartUp = true;
+		isInit = false;
 		Clean();
 	}
 }
@@ -229,8 +232,9 @@ void Game::StartupLoop() {
 		rifle->AddAmmo(75);
 		ammo = new Collectable(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50, 100, 0);
 
-		entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 30, 100, 3.7f, 1.7f, 5, 500, 300));
-		entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 10.5f, 500, 60));
+		//entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 30, 100, 3.7f, 1.7f, 5, 500, 300));
+		//entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 10.5f, 500, 60));
+		entities.push_back(new EnemyTurret(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 500, 100, 100 }, player, 600, map, 500, 300, 2500, 5, 5, 5));
 		powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player, Ability(500, 100, 5, 5)));
 
 		score = new Text(m_ren, Vec2(SCREEN_WIDTH - 180, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "score", { 255, 255, 255, 255 });

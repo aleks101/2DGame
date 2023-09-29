@@ -158,10 +158,12 @@
     <ClCompile Include="2DGame.cpp" />
     <ClCompile Include="Collectable.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="EnemyTurret.cpp" />
     <ClCompile Include="Follower.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerUp.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Shooter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,10 +174,12 @@
   <ItemGroup>
     <ClInclude Include="Collectable.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="EnemyTurret.h" />
     <ClInclude Include="Follower.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PowerUp.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

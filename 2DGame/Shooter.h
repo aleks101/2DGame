@@ -2,8 +2,9 @@
 
 #include "Entity.h"
 #include "Bullet.h"
+#include "Timer.h"
 
-class Shooter : public Entity, private Timer
+class Shooter : public Entity
 {
 private:
 	int m_magazine;
@@ -14,6 +15,7 @@ private:
 	float m_speed;
 	float m_bulletSpeed;
 	float m_bulletDamage;
+	Timer m_timer;
 
 	int m_currMagPos;
 	bool m_isSearchPointSet;

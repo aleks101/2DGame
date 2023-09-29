@@ -9,11 +9,11 @@ Map::~Map() {
 void Map::Update() {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
-			if (coll::CheckCollisionAABB(tile.GetDest(), m_player->GetDest())) {
-				if (coll::CheckCollisionX(tile.GetDest(), m_player->GetDest())) {
+			if (coll::CheckCollisionAABB(*tile.GetDest(), *m_player->GetDest())) {
+				if (coll::CheckCollisionX(*tile.GetDest(), *m_player->GetDest())) {
 					m_player->ChangeDestPosFor(Vec2(-m_player->m_velocity.x, 0));
 				}
-				if (coll::CheckCollisionY(tile.GetDest(), m_player->GetDest())) {
+				if (coll::CheckCollisionY(*tile.GetDest(), *m_player->GetDest())) {
 					m_player->ChangeDestPosFor(Vec2(0, -m_player->m_velocity.y));
 				}
 			}
@@ -74,7 +74,27 @@ void Map::MoveTilesTo(Vec2 newPos) {
 bool Map::CheckCollisionDest(Object* object) {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
-			if (coll::CheckCollisionAABB(tile.GetDest(), object->GetDest())) {
+			if (coll::CheckCollisionAABB(*tile.GetDest(), *object->GetDest())) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool Map::CheckCollisionDest(SDL_Rect* dest) {
+	for (auto& tile : m_tiles) {
+		if (tile.m_isSolid) {
+			if (coll::CheckCollisionAABB(*tile.GetDest(), *dest)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool Map::CheckCollisionDest(Vec2 point) {
+	for (auto& tile : m_tiles) {
+		if (tile.m_isSolid) {
+			if (coll::CheckCollisionPoint(*tile.GetDest(), point)) {
 				return true;
 			}
 		}
@@ -84,7 +104,7 @@ bool Map::CheckCollisionDest(Object* object) {
 bool Map::CheckCollisionScreen(Object* object) {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
-			if (coll::CheckCollisionAABB(tile.GetScreen(), object->GetScreen())) {
+			if (coll::CheckCollisionAABB(*tile.GetScreen(), *object->GetScreen())) {
 				return true;
 			}
 		}
@@ -97,25 +117,25 @@ bool Map::CheckCollision(Object* object, bool destOrScreen, bool XorY) {
 	for (auto& tile : m_tiles) {
 		if (tile.m_isSolid) {
 			if (destOrScreen) {
-				if (coll::CheckCollisionAABB(tile.GetDest(), object->GetDest())) {
+				if (coll::CheckCollisionAABB(*tile.GetDest(), *object->GetDest())) {
 					if (XorY) {
-						if (coll::CheckCollisionX(tile.GetDest(), object->GetDest()))
+						if (coll::CheckCollisionX(*tile.GetDest(), *object->GetDest()))
 							return true;
 					}
 					else {
-						if (coll::CheckCollisionY(tile.GetDest(), object->GetDest()))
+						if (coll::CheckCollisionY(*tile.GetDest(), *object->GetDest()))
 							return true;
 					}
 				}
 			}
 			else {
-				if (coll::CheckCollisionAABB(tile.GetScreen(), object->GetScreen())) {
+				if (coll::CheckCollisionAABB(*tile.GetScreen(), *object->GetScreen())) {
 					if (XorY) {
-						if (coll::CheckCollisionX(tile.GetScreen(), object->GetScreen()))
+						if (coll::CheckCollisionX(*tile.GetScreen(), *object->GetScreen()))
 							return true;
 					}
 					else {
-						if (coll::CheckCollisionY(tile.GetScreen(), object->GetScreen()))
+						if (coll::CheckCollisionY(*tile.GetScreen(), *object->GetScreen()))
 							return true;
 					}
 				}

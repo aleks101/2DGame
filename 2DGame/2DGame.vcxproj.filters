@@ -25,6 +25,9 @@
     <Filter Include="Weapons">
       <UniqueIdentifier>{a877136b-1a38-426b-9756-b5ab96ec43a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Projectiles">
+      <UniqueIdentifier>{f61be692-2a08-45eb-8d38-c5eb346fccae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2DGame.cpp">
@@ -49,6 +52,12 @@
       <Filter>Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Shooter.cpp">
+      <Filter>Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyTurret.cpp">
       <Filter>Entity\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -76,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="Shooter.h">
       <Filter>Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyTurret.h">
+      <Filter>Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

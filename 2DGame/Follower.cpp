@@ -31,7 +31,7 @@ void Follower::Update() {
 			//Player is in radius
 			m_isSearchPointSet = false;
 			m_velocity = physics::CalculateVelocity(destPos, enemyPos, m_attackSpeed);
-			if (coll::CheckCollisionAABB(&m_dest, m_player->GetDest()))
+			if (coll::CheckCollisionAABB(m_dest, *m_player->GetDest()))
 				m_player->RemoveHealth(m_damage);
 		}
 		else if (!m_isSearchPointSet) {

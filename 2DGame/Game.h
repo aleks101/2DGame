@@ -17,6 +17,7 @@
 #include "Shooter.h"
 #include "Weapon.h"
 #include "Collectable.h"
+#include "EnemyTurret.h"
 
 class Game
 {

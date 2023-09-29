@@ -10,7 +10,7 @@ Button::~Button() {
 }
 bool Button::CheckMouseOver() {
 	SDL_GetMouseState(&x, &y);
-	if(coll::CheckCollisionPoint(GetDest(), Vec2(x, y)))
+	if(coll::CheckCollisionPoint(*GetDest(), Vec2(x, y)))
 		return true;
 	return false;
 }

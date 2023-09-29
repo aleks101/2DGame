@@ -26,6 +26,7 @@ void Timer::Stop() {
 		m_stop -= m_pausedTime;
 	}
 }
+//ko je merjenje casa koncano
 unsigned int Timer::GetDurationMili() {
 	if(!m_isPaused)
 		return m_stop - m_start;
@@ -36,6 +37,7 @@ unsigned int Timer::GetDurationSec() {
 		return (m_stop - m_start) / 1000;
 	return 0;
 }
+//za merjenje casa med stopanjem
 unsigned int Timer::GetSec() {
 	if (!m_isPaused)
 		return (SDL_GetTicks() - m_start) / 1000;

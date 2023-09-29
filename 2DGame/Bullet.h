@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "Physics.h"
 
-class Bullet : public Object, public Timer
+class Bullet : public Object
 {
 private:
 	Uint32 m_lifeTime;
@@ -14,6 +14,7 @@ private:
 	Vec2 m_velocity;
 	Vec2 m_point;
 	int m_speedModifier;
+	Timer m_timer;
 public:
 	Bullet(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect destPos, SDL_Rect* playerDest, Vec2 screenPos, Vec2 point, float velocity, float damage, int speedModifier, unsigned int lifeTime);
 	SDL_Rect* GetDest() { return &m_dest; }
