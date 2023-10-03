@@ -11,6 +11,9 @@ Shooter::Shooter(SDL_Renderer* ren, SDL_Texture* tex, SDL_Rect dest, Entity* pla
 	m_isSearchPointSet = false;
 	m_destination = Vec2();
 	m_velocity = Vec2();
+	m_distanceFromPlayerForDodging = 400;
+	m_isDodging = false;
+	angle = 0;
 	m_timer.Start();
 	LOG("SHOOTER CONSTRUCTED\n");
 }
@@ -28,17 +31,28 @@ void Shooter::Update() {
 	if (m_health <= 0)
 		m_isAlive = false;
 	else {
-		Vec2 enemyCenter(m_player->GetDest()->x + m_player->GetDest()->w / 2, m_player->GetDest()->y + m_player->GetDest()->h / 2);
+		Vec2 enemyCenter = m_player->GetCenter();
 		Vec2 enemyPos(m_player->GetDest()->x, m_player->GetDest()->y);
 		Vec2 destPos(m_dest.x, m_dest.y);
 
-		if (IsPointInRadius(GetCenter(), enemyCenter, m_searchPlayerRadius)) {
+		if (IsPointInRadius(GetCenter(), enemyCenter, m_searchPlayerRadius) && !IsPathBlocked()) {
 			//Player is in radius
-			m_velocity = physics::CalculateVelocity(destPos, enemyPos, 2);
 			m_isSearchPointSet = false;
+			if (IsPointInRadius(GetCenter(), enemyCenter, m_distanceFromPlayerForDodging)) {
+				m_isDodging = true;
+			}
+			else {
+				m_isDodging = false;
+			}
+			if (!m_isDodging) {
+				m_velocity = physics::CalculateVelocity(destPos, enemyPos, 2);
+			}
+			else {
+				MoveAroundEnemy(enemyCenter, 5, 0.02);
+			}
 			Attack();
 		}
-		else if (!m_isSearchPointSet) {
+		else if (!m_isSearchPointSet && IsPathBlocked()) {
 			if (destPos.x != m_searchAreaRadius && destPos.y != m_searchAreaRadius) {
 				m_destination = GetRandomPoint(destPos, m_searchAreaRadius);
 				m_velocity = physics::CalculateVelocity(destPos, m_destination, m_speed);
@@ -110,4 +124,18 @@ Vec2 Shooter::GetRandomPoint(Vec2 centerPoint, int radius) {
 	int y = (rand() % (highEndY - lowEndY + 1)) + lowEndY;
 
 	return Vec2(x, y);
+}
+bool Shooter::IsPathBlocked() {
+	Ray raycast(GetCenter(), m_player->GetCenter(), m_map);
+	return !raycast.HasReachPoint();
+}
+void Shooter::MoveAroundEnemy(Vec2 center, float radius, float rotateSpeed) {
+	Vec2 toPlayerSpeed = physics::CalculateVelocity(GetCenter(), center, m_speed);
+
+	m_velocity.x = radius * cos(angle);
+	m_velocity.y = radius * sin(angle);
+
+	m_velocity = m_velocity + toPlayerSpeed;
+
+	angle += rotateSpeed;
 }

@@ -232,10 +232,8 @@ void Game::StartupLoop() {
 		rifle->AddAmmo(75);
 		ammo = new Collectable(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50, 100, 0);
 
+		entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 700, 500, 50, 1.5f, 16, 10.5f, 500, 60));		
 		//entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 30, 100, 3.7f, 1.7f, 5, 500, 300));
-		//entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 500, 300, 50, 3, 16, 10.5f, 500, 60));
-		entities.push_back(new EnemyTurret(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 500, 100, 100 }, player, 600, map, 500, 300, 2500, 5, 5, 5));
-		powerUps.push_back(new PowerUp(m_ren, Assets::GetTexture("Files/Images/blue.png"), { 100, 500, 25, 25 }, player, Ability(500, 100, 5, 5)));
 
 		score = new Text(m_ren, Vec2(SCREEN_WIDTH - 180, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "score", { 255, 255, 255, 255 });
 		score->SetNoChangeText("Score: ");
