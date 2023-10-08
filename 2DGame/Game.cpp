@@ -85,7 +85,7 @@ void Game::Clean() {
 	delete levelText; levelText = NULL;
 	delete pauseText1; pauseText1 = NULL;
 	delete score; score = NULL;
-	//delete enterName; enterName = NULL;
+	delete enterName; enterName = NULL;
 	delete resumeButton; resumeButton = NULL;
 	delete quitButton; quitButton = NULL;
 	//delete exitButton; exitButton=NULL;
@@ -233,16 +233,17 @@ void Game::StartupLoop() {
 		ammo = new Collectable(m_ren, Assets::GetTexture("Files/Images/Rifle.jpg"), { 100, 700, 10, 10 }, player, 50, 100, 0);
 
 		entities.push_back(new Shooter(m_ren, Assets::GetTexture("Files/Images/red.png"), { 600, 300, 50 ,50 }, player, map, 5, 700, 500, 50, 1.5f, 16, 10.5f, 500, 60));		
-		//entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 30, 100, 3.7f, 1.7f, 5, 500, 300));
+		entities.push_back(new Follower(m_ren, Assets::GetTexture("Files/Images/red.png"), { 500, 250, 50 ,50 }, player, map, 30, 100, 3.7f, 1.7f, 5, 500, 300));
 
 		score = new Text(m_ren, Vec2(SCREEN_WIDTH - 180, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "score", { 255, 255, 255, 255 });
 		score->SetNoChangeText("Score: ");
 		playerHealth = new Text(m_ren, Vec2(0, 20), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "health", { 255, 255, 255, 255 });
 		playerHealth->SetNoChangeText("Health: ");
-		playerName = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "player", { 255, 255, 255, 255 });
+		playerName = new Text(m_ren, Vec2(145, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "player", { 255, 255, 255, 255 });
 		ammoText = new Text(m_ren, Vec2(0, 40), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "ammo", { 255, 255, 255, 255 });
 		levelText = new Text(m_ren, Vec2(SCREEN_WIDTH - 180, 30), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "Level: ", { 255, 255, 255, 255 });
 		levelText->SetNoChangeText("Level: ");
+		enterName = new Text(m_ren, Vec2(0, 0), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "Enter name: ", { 255, 255, 255, 255 });
 
 		pauseText1 = new Text(m_ren, Vec2(500, 150), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "Game is paused", { 255, 255, 255, 255 });
 		resumeButton = new Button(m_ren, &ev, Vec2(100, 350), Assets::GetFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf"), "RESUME PLAYING", { 255, 255, 255, 255 }, { 255, 0, 0, 255 });
@@ -257,6 +258,7 @@ void Game::StartupLoop() {
 		isInit = true;
 	}
 
+	enterName->Update();
 	playerName->Update();
 	playerName->ChangeText(playerNamestring);
 	if (ev.type == SDL_TEXTINPUT) {
@@ -268,6 +270,8 @@ void Game::StartupLoop() {
 	else if (ev.type == SDL_KEYDOWN && ev.key.keysym.sym == SDLK_RETURN && playerNamestring.size() >= 3) {
 		isStartUp = false;
 		playerName->ChangeText(playerNamestring);
+		playerName->SetDestPos(Vec2(0, 0));
+		playerName->ChangeSize(80);
 		SDL_StopTextInput();
 	}
 }
