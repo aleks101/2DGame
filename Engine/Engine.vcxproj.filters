@@ -81,6 +81,9 @@
     <ClInclude Include="Ray.h">
       <Filter>Calculations</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -127,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Effects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
