@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <ctime>
 
 #include "App.h"
@@ -10,6 +11,7 @@
 #include "Log.h"
 #include "FileManager.h"
 #include "Button.h"
+//#include "Animation.h"
 
 #include "Player.h"
 #include "PowerUp.h"
@@ -36,6 +38,7 @@ private:
 	int numOfHardEnemies;
 	int numOfBosses;
 	unsigned int timeoutTime;
+	float timePassed = 0;
 	std::string playerNamestring;
 
 	Player* player;

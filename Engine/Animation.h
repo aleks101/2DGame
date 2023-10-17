@@ -1,15 +1,20 @@
 #pragma once
-
 #include <SDL.h>
-#include "Timer.h"
 
 class Animation
 {
 private:
+	bool m_finished;
 	bool m_loop;
+	int m_frames;
+	uint32_t* m_frameDuration;
+	int m_currFrame;
+	int m_startX, m_startY, m_width, m_height;
+	SDL_Rect* m_srcRect;
 public:
-	Animation(SDL_Texture* tex, SDL_Rect* sourceRect, int startX, int startY, int width, int height, int frames);
-	void SetFrameDuration(int frame, unsigned int duration);
+	Animation(SDL_Rect* sourceRect, int startX, int startY, int width, int height, int frames);
+	~Animation();
+	void SetFrameDuration(int frame, uint32_t duration);
 	void Animate();
 	void SetLooping(bool isLooping);
 	bool IsFinished();

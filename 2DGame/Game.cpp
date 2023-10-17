@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <string>
 
 Game::Game() {
 	App::ApplicationStart("Battlemania");
@@ -27,7 +26,7 @@ Game::~Game() {
 	App::ApplicationQuit();
 }
 void Game::Setup() {
-	srand(time(0));
+	std::srand(time(NULL));
 
 	isRunning = true;
 	isInit = false;
@@ -103,6 +102,12 @@ void Game::MainLoop() {
 			SDL_SetRenderTarget(m_ren, sceneTexture);
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 0);
 			SDL_RenderClear(m_ren);
+
+			Timer::CalcDeltaTime();
+			timePassed += Timer::deltaTime;
+			LOG(timePassed);
+			LOG(" deltaTime: "); LOG(Timer::deltaTime);
+			LOG("\n");
 
 			if (isStartUp)
 				StartupLoop();
@@ -271,7 +276,6 @@ void Game::StartupLoop() {
 		isStartUp = false;
 		playerName->ChangeText(playerNamestring);
 		playerName->SetDestPos(Vec2(0, 0));
-		playerName->ChangeSize(80);
 		SDL_StopTextInput();
 	}
 }
