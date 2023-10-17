@@ -48,11 +48,10 @@ unsigned int Timer::GetMili() {
 		return (SDL_GetTicks() - m_start);
 	return 0;
 }
-float Timer::deltaTime = 0;
-float Timer::s_prevTime = 0;
-
-void Timer::CalcDeltaTime() {
+float Time::deltaTime = 0;
+float Time::s_prevTime = 0;
+void Time::CalcDeltaTime() {
 	float currTime = SDL_GetTicks();
-	deltaTime = (currTime - s_prevTime)/1000;
+	deltaTime = (currTime - s_prevTime) / 1000;
 	s_prevTime = currTime;
 }

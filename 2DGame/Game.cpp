@@ -24,6 +24,10 @@ Game::~Game() {
 	Assets::CleanSounds();
 
 	App::ApplicationQuit();
+
+	LOG("Elapsed time: ");
+	LOG(timePassed);
+	LOG("\n");
 }
 void Game::Setup() {
 	std::srand(time(NULL));
@@ -103,11 +107,8 @@ void Game::MainLoop() {
 			SDL_SetRenderDrawColor(m_ren, 0, 0, 0, 0);
 			SDL_RenderClear(m_ren);
 
-			Timer::CalcDeltaTime();
-			timePassed += Timer::deltaTime;
-			LOG(timePassed);
-			LOG(" deltaTime: "); LOG(Timer::deltaTime);
-			LOG("\n");
+			Time::CalcDeltaTime();
+			timePassed += Time::deltaTime;
 
 			if (isStartUp)
 				StartupLoop();
