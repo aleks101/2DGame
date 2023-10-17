@@ -271,6 +271,7 @@ void Game::StartupLoop() {
 		isStartUp = false;
 		playerName->ChangeText(playerNamestring);
 		playerName->SetDestPos(Vec2(0, 0));
+		playerName->ChangeSize(80);
 		SDL_StopTextInput();
 	}
 }
