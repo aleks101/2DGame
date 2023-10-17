@@ -15,4 +15,3 @@ public:
 	bool IsFinished();
 	void SkipToFrame(int frame);
 };
-
