@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "Weapon.h"
 #include "Light.h"
+#include "Animation.h"
 
 class Player : public Entity
 {
@@ -16,6 +17,7 @@ private:
 
 	SDL_Event* m_ev;
 	Light m_light;
+	Animation animation;
 public:
 	Weapon<15>* m_gun;
 public:

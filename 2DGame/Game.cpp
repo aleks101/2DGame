@@ -44,6 +44,7 @@ void Game::Setup() {
 	Assets::AddTexture(m_ren, "Files/Images/player.jpg", IMG_INIT_JPG);
 	Assets::AddTexture(m_ren, "Files/Images/tile.jpg", IMG_INIT_JPG);
 	Assets::AddTexture(m_ren, "Files/Images/Rifle.jpg", IMG_INIT_JPG);
+	Assets::AddTexture(m_ren, "Files/Images/animation.png", IMG_INIT_PNG);
 	Assets::AddFont("Files/Fonts/8-bit-operator/8bitOperatorPlus8-Regular.ttf", 22);
 
 	sceneTexture = SDL_CreateTexture(m_ren, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
@@ -228,7 +229,7 @@ void Game::PauseLoop() {
 }
 void Game::StartupLoop() {
 	if (!isInit) {
-		player = new Player(m_ren, Assets::GetTexture("Files/Images/player.jpg"), &ev, { 600, 350, 50, 50 }, 1000);
+		player = new Player(m_ren, Assets::GetTexture("Files/Images/animation.png"), &ev, { 600, 350, 150, 150 }, 1000);
 
 		map = new Map(player);
 		map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);
