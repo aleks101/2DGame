@@ -84,6 +84,9 @@
     <ClInclude Include="Animation.h">
       <Filter>Effects</Filter>
     </ClInclude>
+    <ClInclude Include="Noise.h">
+      <Filter>Calculations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise.cpp">
+      <Filter>Calculations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
