@@ -2,8 +2,8 @@
 
 #ifdef NOISE
 #include <noise/noise.h>
+#include "noiseutils.h"
 #include "Log.h"
-#include <noiseutils.h>
 
 class Noise {
 private:
