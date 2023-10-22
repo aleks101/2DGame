@@ -22,8 +22,9 @@ private:
 	SDL_Rect* m_srcRect;
 public:
 	Animation();
-	~Animation();
+	virtual ~Animation();
 	void Init(SDL_Rect* sourceRect, int startX, int startY, int width, int height, int frames);
+	void Clean();
 
 	void SetFrameDuration(int frame, float duration);
 	void Animate();

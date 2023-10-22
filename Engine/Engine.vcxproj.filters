@@ -16,6 +16,9 @@
     <Filter Include="App">
       <UniqueIdentifier>{f1b721c8-fcbf-470e-be9a-37e78a2c16d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Calculations\PerlinNoise">
+      <UniqueIdentifier>{b220adaf-4ae4-4e87-af7d-94dadf20e3d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h">
@@ -85,7 +88,10 @@
       <Filter>Effects</Filter>
     </ClInclude>
     <ClInclude Include="Noise.h">
-      <Filter>Calculations</Filter>
+      <Filter>Calculations\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="noiseutils.h">
+      <Filter>Calculations\PerlinNoise</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +144,10 @@
       <Filter>Effects</Filter>
     </ClCompile>
     <ClCompile Include="Noise.cpp">
-      <Filter>Calculations</Filter>
+      <Filter>Calculations\PerlinNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="noiseutils.cpp">
+      <Filter>Calculations\PerlinNoise</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

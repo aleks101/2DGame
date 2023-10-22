@@ -2,11 +2,13 @@
 //
 
 #include "Game.h"
+#include "Noise.h"
 
 int main(int argc, char* argv[])
 {
-    Game game;
-    game.Setup();
+    //Game game;
+    //game.Setup();
+    Noise::Test();
 
     return 0;
 }

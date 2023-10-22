@@ -9,9 +9,7 @@ Animation::Animation() : m_frameDuration(nullptr), m_srcRect(nullptr), m_startX(
 	m_stop = false;
 }
 Animation::~Animation() {
-	if(m_frameDuration!=NULL)
-		delete [] m_frameDuration;
-	m_frameDuration = NULL;
+	Clean();
 }
 void Animation::Init(SDL_Rect* sourceRect, int startX, int startY, int width, int height, int frames) {
 	m_srcRect = sourceRect;
@@ -33,8 +31,14 @@ void Animation::Init(SDL_Rect* sourceRect, int startX, int startY, int width, in
 	m_srcRect->w = m_width;
 	m_srcRect->h = m_height;
 }
+void Animation::Clean() {
+	if(m_frameDuration!=NULL)
+		delete[] m_frameDuration;
+	m_frameDuration = NULL;
+}
 void Animation::SetFrameDuration(int frame, float duration) {
-	m_frameDuration[frame] = duration;
+	if(frame<m_frames)
+		m_frameDuration[frame] = duration;
 }
 void Animation::Animate() {
 	if (!m_stop) {
@@ -44,7 +48,7 @@ void Animation::Animate() {
 			m_srcRect->x = m_startX + m_width * m_currFrame;
 			m_srcRect->y = m_startY + m_height * m_row;
 
-			if (m_frameDuration[m_currFrame] <= m_time) {
+			if (m_frameDuration != nullptr && m_frameDuration[m_currFrame] <= m_time) {
 				m_time = 0;
 				m_currFrame++;
 			}
