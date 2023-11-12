@@ -12,7 +12,7 @@ Make sure your path to SDL2 directory on your computer is as follows(extract the
 - SDL2_ttf:   C:\SDL\SDL2_ttf-2.20.2
 - SDL2_mixer: C:\SDL\SDL2_mixer-2.6.3
 
-Make sure your path to the libnoise directory on your computer is as follows(extract the library in the libnoise folder):
+Make sure your path to the libnoise directory on your computer is as follows(extract the library in the Header folder):
 - libnoise: C:\libnoise\Header
 
 Libnoise library works only for 32bit system, so make sure you switch to 32bit configuration in visual studio.
