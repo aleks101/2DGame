@@ -9,7 +9,9 @@ int main(int argc, char* argv[])
     Game game;
     game.Setup();
     //Noise::Test();
-
+    //testing again
+    int a = 4;
+    int b;
     return 0;
 }
 
