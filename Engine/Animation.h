@@ -14,7 +14,7 @@ private:
 
 	int m_frames;
 	int m_currFrame;
-	float* m_frameDuration;
+	float* m_frameDuration = NULL;
 	float m_time;
 
 	int m_row;

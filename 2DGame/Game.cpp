@@ -5,14 +5,16 @@ Game::Game() {
 	m_ren = App::renderer;
 }
 Game::~Game() {
-	highScore->WriteBinary(*player);
-	Player t;
-	highScore->ReadBinary(t, 0);
-	LOG("PLAYER SCORE: " + std::to_string(t.m_score));
-	highScore->ChangeFile("Files/Save/score.txt");
-	highScore->Write(player->m_score);
+	//no error if this code is commented
+		highScore->WriteBinary(*player);
+		Player t;
+		highScore->ReadBinary(t, 0);
+		LOG("PLAYER SCORE: " + std::to_string(t.m_score));
+		highScore->ChangeFile("Files/Save/score.txt");
+		highScore->Write(player->m_score);
 
-	delete highScore;
+		delete highScore;
+	//
 
 	Clean();
 
@@ -52,12 +54,14 @@ void Game::Setup() {
 
 	//SDL_SetTextureBlendMode(Assets::GetTexture("Files/Images/blue.png"), SDL_BLENDMODE_BLEND);
 	//SDL_SetTextureBlendMode(Assets::GetTexture("Files/Images/red.png"), SDL_BLENDMODE_BLEND);
-	
+
 	MainLoop();
 }
 void Game::Clean() {
+	//error
 	delete player; player = NULL;
 	delete map; map = NULL;
+	//error
 	if (ammo != NULL) {
 		delete ammo; ammo = NULL;
 	}

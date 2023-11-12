@@ -9,7 +9,7 @@ Animation::Animation() : m_frameDuration(nullptr), m_srcRect(nullptr), m_startX(
 	m_stop = false;
 }
 Animation::~Animation() {
-	Clean();
+
 }
 void Animation::Init(SDL_Rect* sourceRect, int startX, int startY, int width, int height, int frames) {
 	m_srcRect = sourceRect;
