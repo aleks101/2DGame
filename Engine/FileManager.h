@@ -59,6 +59,7 @@ public:
 	}
 	template<typename T>
 	bool WriteAppendBinary(T data) {
+		/*
 		std::ofstream file(filePath.c_str(), std::ios::binary | std::ios::app);
 		if (!file.is_open()) {
 			LOG("Error opening file: " + filePath);
@@ -67,6 +68,7 @@ public:
 		file.write((char*)&data, sizeof(data));
 		file.close();
 		return true;
+		*/
 	}
 	template<typename T>
 	bool ReadBinary(std::vector<T>& data) {
