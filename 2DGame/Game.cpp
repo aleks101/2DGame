@@ -234,7 +234,7 @@ void Game::PauseLoop() {
 }
 void Game::StartupLoop() {
 	if (!isInit) {
-		player = new Player(m_ren, Assets::GetTexture("Files/Images/animation.png"), &ev, { 600, 350, 150, 150 }, 1000);
+		player = new Player(m_ren, Assets::GetTexture("Files/Images/blue.png"), &ev, { 600, 350, 50, 50 }, 1000);
 
 		map = new Map(player);
 		map->AddLayer(m_ren, "Files/Maps/map.txt", { TexID(Assets::GetTexture("Files/Images/tile.jpg"), 2) }, Vec2(150, 150), 50, true);

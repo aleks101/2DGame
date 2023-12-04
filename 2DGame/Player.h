@@ -17,7 +17,7 @@ private:
 
 	SDL_Event* m_ev;
 	Light m_light;
-	Animation animation;
+	//Animation animation;
 public:
 	Weapon<15>* m_gun;
 public:
