@@ -21,6 +21,7 @@ Shooter::~Shooter() {
 	for(int i=0;i<m_magazine;i++)
 		if(m_bullets[i]!=NULL)
 			delete m_bullets[i];
+	delete m_bullets;
 	LOG("SHOOTER DECONSTRUCTED\n");
 }
 void Shooter::Render() {

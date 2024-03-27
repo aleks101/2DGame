@@ -47,13 +47,25 @@ public:
 	std::string Read(int lineID);
 	//binary files
 	template<typename T>
+	bool WriteBinary(std::vector<T> data) {
+		std::ofstream file(filePath.c_str(), std::ios::binary);
+		if (!file.is_open()) {
+			LOG("Error opening file: " + filePath);
+			return false;
+		}
+		for (int i = 0; i < data.size(); i++)
+			file.write((char*)&data[i], sizeof(T));
+		file.close();
+		return true;
+	}
+	template<typename T>
 	bool WriteBinary(T data) {
 		std::ofstream file(filePath.c_str(), std::ios::binary);
 		if (!file.is_open()) {
 			LOG("Error opening file: " + filePath);
 			return false;
 		}
-		file.write((char*)&data, sizeof(data));
+		file.write((char*)&data, sizeof(T));
 		file.close();
 		return true;
 	}
@@ -64,7 +76,19 @@ public:
 			LOG("Error opening file: " + filePath);
 			return false;
 		}
-		file.write((char*)&data, sizeof(data));
+		file.write((char*)&data, sizeof(T));
+		file.close();
+		return true;
+	}
+	template<typename T>
+	bool WriteAppendBinary(std::vector<T> data) {
+		std::ofstream file(filePath.c_str(), std::ios::binary | std::ios::app);
+		if (!file.is_open()) {
+			LOG("Error opening file: " + filePath);
+			return false;
+		}
+		for(int i = 0; i < data.size(); i++)
+			file.write((char*)&data[i], sizeof(T));
 		file.close();
 		return true;
 	}

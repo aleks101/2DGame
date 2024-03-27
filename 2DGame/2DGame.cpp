@@ -2,13 +2,39 @@
 //
 
 #include "Game.h"
-#include "Noise.h"
+#include "FileManager.h"
+
+//class ABC {
+//public:
+//    int id;
+//    int value;
+//    int **vec;
+//    ABC(int x, int y) : id(x), value(y){
+//        vec = new int*[id];
+//        for (int i = 0; i < id; i++)
+//            vec[i] = new int(value);
+//    }
+//};
 
 int main(int argc, char* argv[])
 {
     //Game game;
     //game.Setup();
-    Noise::Test();
+
+    //FileManager manager("Files/Save/tmp.txt");
+
+    //ABC x(5,5);
+    //ABC *y = new ABC(0,0);
+    ////ABC y(0, 0);
+    //manager.WriteBinary(x);
+    //manager.ReadBinary(*y, 0);
+
+    //LOG((*y).id);
+    //LOG("\n");
+
+    //for (int i = 0; i < (*y).id; i++)
+    //    LOG(*(*y).vec[i]);
+
 
     return 0;
 }

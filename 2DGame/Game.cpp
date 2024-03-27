@@ -7,7 +7,7 @@ Game::Game() {
 Game::~Game() {
 	highScore->WriteBinary(*player);
 	Player t;
-	highScore->ReadBinary(t, 0);
+	/*TUKAJ SE POJAVI PROBLEM ---->*/highScore->ReadBinary(t, 0);
 	LOG("PLAYER SCORE: " + std::to_string(t.m_score));
 	highScore->ChangeFile("Files/Save/score.txt");
 	highScore->Write(player->m_score);

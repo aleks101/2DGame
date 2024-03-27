@@ -147,7 +147,7 @@
       <Filter>Calculations\PerlinNoise</Filter>
     </ClCompile>
     <ClCompile Include="noiseutils.cpp">
-      <Filter>Calculations\PerlinNoise</Filter>
+      <Filter>Calculations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

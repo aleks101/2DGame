@@ -12,4 +12,4 @@ public:
 	static void Test();
 };
 
-#endif // !DEBUG
+#endif // !NOISE

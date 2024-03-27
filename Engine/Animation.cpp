@@ -33,7 +33,7 @@ void Animation::Init(SDL_Rect* sourceRect, int startX, int startY, int width, in
 }
 void Animation::Clean() {
 	if(m_frameDuration!=NULL)
-		delete[] m_frameDuration;
+		delete m_frameDuration;
 	m_frameDuration = NULL;
 }
 void Animation::SetFrameDuration(int frame, float duration) {
