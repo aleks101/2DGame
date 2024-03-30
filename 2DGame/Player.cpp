@@ -7,23 +7,22 @@ Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest
 	m_velocity = Vec2(0, 0);
 
 	m_light = Light(ren, GetCenter(), m_dest.w-16, 190, { 255, 255, 255, 255 }, SDL_BLENDMODE_ADD);
-	/*animation.Init(GetSrc(), 0, 0, 50, 50, 4);
+	animation.Init(GetSrc(), 0, 0, 50, 50, 4);
 	animation.SetLooping(true);
 	for (int i = 0; i < 4; i++) {
 		animation.SetFrameDuration(i, 0.3);
-	}*/
+	}
 
 	m_gun = NULL;
 }
 Player::~Player() {
-	//no error if this line is commented
-		//animation.Clean();
+	animation.Clean();
 	LOG("PLAYER DECONSTRUCTED\n");
 }
 void Player::Render() {
-	//animation.Animate();
+	animation.Animate();
 
-	SDL_RenderCopy(m_ren, m_tex, NULL, &m_screen);
+	SDL_RenderCopy(m_ren, m_tex, &m_src, &m_screen);
 	//m_light.DrawLight();
 }
 void Player::Update() {
