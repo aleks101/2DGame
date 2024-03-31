@@ -16,7 +16,7 @@ Game::~Game() {
 
 	Clean();
 
-	SDL_DestroyTexture(sceneTexture);;
+	SDL_DestroyTexture(sceneTexture);
 
 	Assets::CleanTextures();
 	Assets::CleanFonts();
