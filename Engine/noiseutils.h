@@ -20,6 +20,9 @@
 // off every 'zig'.)
 //
 
+#ifdef NOISE
+
+
 #ifndef NOISEUTILS_H
 #define NOISEUTILS_H
 
@@ -2538,3 +2541,4 @@ namespace noise
 }
 
 #endif
+#endif //NOISE

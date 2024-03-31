@@ -12,9 +12,9 @@ class Weapon : public Object, protected Timer
 {
 private:
 	Uint32 m_fireDelay;
-	Bullet* m_magazine[T];
 	SDL_Event* m_ev;
 	SDL_Rect* m_playerScreen;
+	Bullet* m_magazine[T];
 
 	float m_bulletSpeed;
 	int m_currMagPos;

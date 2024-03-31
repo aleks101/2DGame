@@ -20,10 +20,7 @@
 // off every 'zig'.)
 //
 
-
-#ifdef NOISE
-
-#include <fstream>
+#ifdef NOISE#include <fstream>
 
 #include <noise/interp.h>
 #include <noise/mathconsts.h>
@@ -1301,4 +1298,5 @@ void RendererNormalMap::Render ()
   }
 }
 
-#endif //!NOISE
+
+#endif //NOISE
