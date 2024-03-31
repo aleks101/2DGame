@@ -5,7 +5,6 @@
 #include "Timer.h"
 #include "Log.h"
 
-template<int T>
 class Animation
 {
 private:
@@ -15,7 +14,7 @@ private:
 
 	int m_frames;
 	int m_currFrame;
-	float* m_frameDuration[T] = NULL;
+	float* m_frameDuration = NULL;
 	float m_time;
 
 	int m_row;
@@ -38,11 +37,8 @@ public:
 	void Reset();
 	void Clean();
 };
-
-
-
-template<int T>
-Animation<T>::Animation() : m_frameDuration(nullptr), m_srcRect(nullptr), m_startX(0), m_startY(0), m_width(0), m_height(0), m_frames(T) {
+/*
+Animation::Animation() : m_frameDuration(nullptr), m_srcRect(nullptr), m_startX(0), m_startY(0), m_width(0), m_height(0) {
 	m_loop = false;
 	m_finished = false;
 	m_currFrame = 0;
@@ -50,15 +46,14 @@ Animation<T>::Animation() : m_frameDuration(nullptr), m_srcRect(nullptr), m_star
 	m_row = 0;
 	m_stop = false;
 }
-template<int T>
-Animation<T>::~Animation() {
-	for (int i = 0; i < m_frames; i++) {
-		delete m_frameDuration[i];
-		m_frameDuration[i] = nullptr;
-	}
+Animation::~Animation() {
+	//for (int i = 0; i < m_frames; i++) {
+	//	delete m_frameDuration[i];
+	//	m_frameDuration[i] = nullptr;
+	//}
+	delete m_frameDuration;
 }
-template<int T>
-void Animation<T>::Init(SDL_Rect* sourceRect, int startX, int startY, int width, int height, int frames) {
+void Animation::Init(SDL_Rect* sourceRect, int startX, int startY, int width, int height, int frames) {
 	m_srcRect = sourceRect;
 	m_startX = startX;
 	m_startY = startY;
@@ -78,19 +73,16 @@ void Animation<T>::Init(SDL_Rect* sourceRect, int startX, int startY, int width,
 	m_srcRect->w = m_width;
 	m_srcRect->h = m_height;
 }
-template<int T>
-void Animation<T>::Clean() {
+void Animation::Clean() {
 	if (m_frameDuration != NULL)
 		delete[] m_frameDuration;
 	m_frameDuration = NULL;
 }
-template<int T>
-void Animation<T>::SetFrameDuration(int frame, float duration) {
+void Animation::SetFrameDuration(int frame, float duration) {
 	if (frame < m_frames)
 		m_frameDuration[frame] = duration;
 }
-template<int T>
-void Animation<T>::Animate() {
+void Animation::Animate() {
 	if (!m_stop) {
 		if (m_loop)
 			m_finished = false;
@@ -110,32 +102,26 @@ void Animation<T>::Animate() {
 		}
 	}
 }
-template<int T>
-void Animation<T>::SetLooping(bool loop) {
+void Animation::SetLooping(bool loop) {
 	m_loop = loop;
 }
-template<int T>
-bool Animation<T>::IsFinished() {
+bool Animation::IsFinished() {
 	return m_finished;
 }
-template<int T>
-void Animation<T>::SkipToFrame(int frame) {
+void Animation::SkipToFrame(int frame) {
 	m_currFrame = frame;
 }
-template<int T>
-void Animation<T>::ChangeRow(int row) {
+void Animation::ChangeRow(int row) {
 	m_row = row;
 }
-template<int T>
-void Animation<T>::Stop() {
+void Animation::Stop() {
 	m_stop = true;
 }
-template<int T>
-void Animation<T>::Resume() {
+void Animation::Resume() {
 	m_stop = false;
 }
-template<int T>
-void Animation<T>::Reset() {
+void Animation::Reset() {
 	m_currFrame = 0;
 	m_time = 0;
 }
+*/

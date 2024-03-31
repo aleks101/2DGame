@@ -16,6 +16,7 @@ Player::Player(SDL_Renderer* ren, SDL_Texture* tex, SDL_Event* ev, SDL_Rect dest
 	m_gun = NULL;
 }
 Player::~Player() {
+	animation.Clean();
 	LOG("PLAYER DECONSTRUCTED\n");
 }
 void Player::Render() {

@@ -5,16 +5,15 @@ Game::Game() {
 	m_ren = App::renderer;
 }
 Game::~Game() {
-	//no error if this code is commented
 	highScore->WriteBinary(*player);
 	Player t;
-	highScore->ReadBinary(t, 0);
-	//LOG(t.m_gun->GetBullets()[0]->m_damage);
+	/*TUKAJ SE POJAVI PROBLEM ---->*/highScore->ReadBinary(t, 0);
 	LOG("PLAYER SCORE: " + std::to_string(t.m_score));
 	highScore->ChangeFile("Files/Save/score.txt");
 	highScore->Write(player->m_score);
 
-	delete highScore;
+
+		delete highScore;
 	//problem je v tem ker dinamicno ustvarjen array shranim v filo, ampak to ne dela
 	//ker shrani le naslov naslov do arraya
 
